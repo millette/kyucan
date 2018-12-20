@@ -48,7 +48,7 @@
   "purgecss": {
     "content": [
       "*.html",
-      "*.tag"
+      "tags/*.tag"
     ]
   }
 }
