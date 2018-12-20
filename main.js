@@ -1,6 +1,8 @@
-import riot from 'riot'
+"use strict"
 
-import './tags/app.tag'
-import './tags/footer.tag'
+import riot from "riot"
 
-riot.mount('app')
+import "./tags/app.tag"
+import "./tags/footer.tag"
+
+riot.mount("app")
