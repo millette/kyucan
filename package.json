@@ -2,17 +2,41 @@
   "name": "kyucan",
   "version": "0.0.0",
   "license": "AGPL-3.0",
+  "repository": "millette/kyucan",
+  "author": {
+    "name": "Robin Millette",
+    "email": "robin@millette.info",
+    "url": "http://robin.millette.info"
+  },
+  "engines": {
+    "node": ">= 10"
+  },
+  "bugs": {
+    "url": "https://github.com/millette/kyucan/issues"
+  },
+  "homepage": "https://github.com/millette/kyucan#readme",
+  "lint-staged": {
+    "*.{js,json,md,html,tag}": [
+      "prettier --write",
+      "git add"
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
   "dependencies": {
     "bulma": "^0.7.2",
     "riot": "^3.13.2"
   },
   "devDependencies": {
     "husky": "^1.3.0",
+    "lint-staged": "^8.1.0",
     "parcel-bundler": "^1.11.0",
     "parcel-plugin-purgecss": "^2.1.0",
     "parcel-plugin-tag": "^1.1.0",
     "prettier": "^1.15.3",
-    "pretty-quick": "^1.8.0",
     "riot-compiler": "^3.5.2"
   },
   "purgecss": {
@@ -20,10 +44,5 @@
       "*.html",
       "tags/*.tag"
     ]
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "pretty-quick --staged"
-    }
   }
 }
