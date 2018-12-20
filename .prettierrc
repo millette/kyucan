@@ -1,0 +1,13 @@
+{
+  "semi": false,
+  "trailingComma": "all",
+  "arrowParens": "always",
+  "overrides": [
+    {
+      "files": "tags/*.tag",
+      "options": {
+        "parser": "html"
+      }
+    }
+  ]
+}
