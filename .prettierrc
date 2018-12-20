@@ -5,9 +5,7 @@
   "overrides": [
     {
       "files": "**/*.tag",
-      "options": {
-        "parser": "html"
-      }
+      "options": { "parser": "html" }
     },
     {
       "files": ".prettierrc",
