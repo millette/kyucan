@@ -4,7 +4,7 @@
       <h3 class="title is-5">{ message }</h3>
       <div class="content">
         <ul>
-          <li each="{" techs }>{ name }</li>
+          <li each="{techs}">{name}</li>
         </ul>
       </div>
     </div>
