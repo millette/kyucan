@@ -8,6 +8,10 @@
       "options": {
         "parser": "html"
       }
+    },
+    {
+      "files": ".prettierrc",
+      "options": { "parser": "json" }
     }
   ]
 }
