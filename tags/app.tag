@@ -13,10 +13,12 @@
   <footer-tag>
     <p>Ligne numéro deux</p>
   </footer-tag>
-  this.message = 'Hello, Riot!'
-  this.techs = [
-    { name: 'HTML' },
-    { name: 'JavaScript' },
-    { name: 'CSS' }
-  ]
+  <script>
+    this.message = 'Hello, Riot!'
+    this.techs = [
+      { name: 'HTML' },
+      { name: 'JavaScript' },
+      { name: 'CSS' }
+    ]
+  </script>
 </app>
