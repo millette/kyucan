@@ -1,0 +1,21 @@
+{
+  "name": "kyucan",
+  "version": "0.0.0",
+  "license": "AGPL-3.0",
+  "dependencies": {
+    "bulma": "^0.7.2",
+    "riot": "^3.13.2"
+  },
+  "devDependencies": {
+    "parcel-bundler": "^1.11.0",
+    "parcel-plugin-purgecss": "^2.1.0",
+    "parcel-plugin-tag": "^1.1.0",
+    "riot-compiler": "^3.5.2"
+  },
+  "purgecss": {
+    "content": [
+      "*.html",
+      "*.tag"
+    ]
+  }
+}
