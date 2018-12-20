@@ -9,9 +9,7 @@
       </div>
     </div>
   </section>
-
   <footer-tag> <p>Ligne numéro deux</p> </footer-tag>
-
   <script>
     this.message = "Hello, Riot!"
     this.techs = [{ name: "HTML" }, { name: "JavaScript" }, { name: "CSS" }]
