@@ -13,6 +13,7 @@
   <footer-tag>
     <p>Ligne numéro deux</p>
   </footer-tag>
+
   <script>
     this.message = 'Hello, Riot!'
     this.techs = [
