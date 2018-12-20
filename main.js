@@ -1,6 +1,6 @@
 import riot from "riot"
 
-import "./app.tag"
-import "./footer.tag"
+import "./tags/app.tag"
+import "./tags/footer.tag"
 
 riot.mount("app")
