@@ -4,7 +4,7 @@
   "arrowParens": "always",
   "overrides": [
     {
-      "files": "**/*.tag",
+      "files": "*.tag",
       "options": { "parser": "html" }
     },
     {
