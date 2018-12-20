@@ -39,6 +39,11 @@
     "prettier": "^1.15.3",
     "riot-compiler": "^3.5.2"
   },
+  "scripts": {
+    "build": "parcel build index.html",
+    "clean": "rm -fr .cache dist",
+    "start": "parcel index.html"
+  },
   "purgecss": {
     "content": [
       "*.html",
