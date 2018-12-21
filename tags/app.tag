@@ -10,6 +10,8 @@
     </div>
   </section>
 
+  <clock-tag format="defaultsToISO" p="0.95" />
+
   <footer-tag> <p>Ligne numéro deux</p> </footer-tag>
 
   <script>
