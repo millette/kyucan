@@ -16,7 +16,7 @@
   },
   "homepage": "https://github.com/millette/kyucan#readme",
   "lint-staged": {
-    "*.{js,json,md,html,tag}": [
+    "*.{js,json,md,html,tag,scss}": [
       "prettier --write",
       "git add"
     ]
@@ -41,9 +41,9 @@
     "riot-compiler": "^3.5.2"
   },
   "scripts": {
-    "build": "parcel build index.html --no-source-maps --detailed-report --experimental-scope-hoisting",
+    "build": "parcel build --no-source-maps --detailed-report --experimental-scope-hoisting index.html",
     "clean": "rm -fr .cache dist",
-    "start": "parcel index.html"
+    "start": "CHOKIDAR_USEPOLLING=yes parcel index.html # workaround https://github.com/parcel-bundler/parcel/issues/1743#issuecomment-441278085"
   },
   "purgecss": {
     "content": [
