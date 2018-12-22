@@ -5,6 +5,7 @@
         <div class="column">
           <event-tag duration="90" />
           <instructions-tag />
+          <colophon-tag foo="boo" />
         </div>
 
         <div class="column">
