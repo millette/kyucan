@@ -3,6 +3,11 @@
     <div class="container">
       <div class="columns">
         <div class="column">
+          <event-tag duration="90" />
+          <instructions-tag />
+        </div>
+
+        <div class="column">
           <form class="box" onsubmit="{submit}">
             <div class="field">
               <label class="label">Nom</label>
@@ -31,8 +36,14 @@
                 />
               </div>
             </div>
-            <fieldset>
-              <legend>Ajouter des dates et des heures</legend>
+            <p if="{!showDates}" class="collapser" onclick="{collapse}">
+              Ajouter des dates et des heures
+            </p>
+
+            <fieldset if="{showDates}">
+              <legend onclick="{collapse}">
+                Ajouter des dates et des heures
+              </legend>
               <virtual each="{dates}">
                 <div class="field">
                   <label class="label">Date #{n}</label>
@@ -49,6 +60,24 @@
                   <label class="label">Heure</label>
                   <div class="control">
                     <input ref="time" class="input" type="time" />
+                  </div>
+                </div>
+                <div class="field">
+                  <label class="label level">
+                    <small class="level-item"> impossible </small>
+                    <div class="level-item">Préférence</div>
+                    <small class="level-item"> absolument </small>
+                  </label>
+                  <div class="control">
+                    <input
+                      ref="preference"
+                      class="input"
+                      type="range"
+                      value="1"
+                      min="0"
+                      max="1"
+                      step="0.04"
+                    />
                   </div>
                 </div>
               </virtual>
@@ -72,7 +101,7 @@
         <div if="{show}" class="column">
           <article class="message is-primary">
             <div class="message-header">
-              <p>Dark</p>
+              <p>Mes choix</p>
               <button
                 onclick="{deleteMessage}"
                 class="delete"
@@ -98,6 +127,9 @@
                     <span if="{offset}"> ({offset})</span>
                   </dd>
                   <dd if="{utcTime}"><small>{utcTime}</small></dd>
+
+                  <dt>Préférence</dt>
+                  <dd>{preference}</dd>
                 </dl>
               </virtual>
             </div>
@@ -113,8 +145,17 @@
       max-height: 25rem;
     }
 
-    input[type="time"] {
+    input[type="range"] {
       margin-bottom: 1rem;
+    }
+
+    .collapser {
+      color: black;
+      margin-bottom: 1rem;
+    }
+
+    dt {
+      font-weight: bold;
     }
   </style>
 
@@ -128,7 +169,7 @@
     }
 
     const offset = makeOffset()
-    this.show = true
+    this.show = false
     this.datesGiven = []
     this.dates = [
       {
@@ -139,11 +180,13 @@
 
     const boop = (d, t) => new Date(`${d}T${t}`).toISOString().split('.')[0] + ' UTC'
 
-    deleteMessage(e) {
-      this.show = false
-    }
+    this.showDates = true
 
-    addDate(e) {
+    collapse() { this.showDates = !this.showDates }
+
+    deleteMessage() { this.show = false }
+
+    addDate() {
       const dates = Array.isArray(this.refs.date) ? [...this.refs.date] : [this.refs.date]
       const date = dates.pop()
       if (date.value) {
@@ -176,19 +219,28 @@
 
     const parseDates = (times, date, i) => {
       if (!date.value) return
-      const o = { date: date.value }
+
+      const preferences = Array.isArray(this.refs.preference)
+        ? this.refs.preference.map((x) => x.valueAsNumber)
+        : [this.refs.preference.valueAsNumber]
+
+      const o = {
+        date: date.value,
+        preference: `${100 * preferences[i]}%`
+      }
+
       if (times[i].value) {
         o.time = times[i].value
         o.utcTime = boop(o.date, o.time)
       } else {
         o.offset = offset
-        o.utcTime = false
       }
       this.datesGiven.push(o)
     }
 
     submit(e) {
       e.preventDefault()
+
       this.refs.name.classList.remove('is-danger')
       this.refs.email.classList.remove('is-danger')
       this.refs.name.classList.add('is-success')
@@ -205,5 +257,7 @@
       document.title = str
       this.show = true
     }
+
+    setTimeout(() => this.refs.name.focus())
   </script>
 </form-tag>
