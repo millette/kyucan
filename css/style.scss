@@ -13,3 +13,12 @@ $text-strong: darken($text, 5);
 
 // last
 @import "bulma.sass";
+
+fieldset > legend {
+  color: $body-background-color;
+}
+
+fieldset {
+  padding: 0.5rem;
+  margin-bottom: 0.5rem;
+}
