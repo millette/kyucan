@@ -19,42 +19,13 @@ import pkgBulma from "bulma/package.json"
 import pkgParcel from "parcel-bundler/package.json"
 import pkgPrettier from "prettier/package.json"
 
-const trimPkg = (p) => {
-  const {
-    name,
-    version,
-    description,
-    license,
-    engines,
-    author,
-    contributors,
-    dependencies,
-    homepage,
-    keywords,
-    repository,
-  } = p
-  return {
-    name,
-    version,
-    description,
-    license,
-    engines,
-    author,
-    contributors,
-    dependencies,
-    homepage,
-    keywords,
-    repository,
-  }
-}
-
 riot.mixin("oy", {
   init: function(opts) {
     console.log("OY-INIT-OPTS:", opts)
     console.log("OY-INIT-THIS:", this)
     this.oy = { booya: 666 }
   },
-  getPkgs: () => [pkgRiot, pkgBulma, pkgParcel, pkgPrettier].map(trimPkg),
+  getPkgs: () => [pkgRiot, pkgBulma, pkgParcel, pkgPrettier],
   self: () => pkg,
 })
 
