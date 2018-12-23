@@ -62,6 +62,7 @@
                   <label class="label">Heure</label>
                   <div class="control">
                     <input
+                      onchange="{timeChange}"
                       ref="time"
                       class="input"
                       type="time"
@@ -199,6 +200,18 @@
     collapse() { this.showDates = !this.showDates }
 
     deleteMessage() { this.show = false }
+
+    timeChange(ev) {
+      // chrome handles the step attribute correctly
+      // but firefox doesn't so we handle it here
+      if (!ev.target.value) return
+      const [h, m] = ev.target.value.split(':')
+      const step = Math.round(ev.target.step / 60)
+      if (m % step) {
+        const nm = `${(step * Math.ceil(m / step)) % 60}`.padStart(2, '0')
+        ev.target.value = `${h}:${nm}`
+      }
+    }
 
     addDate() {
       const dates = Array.isArray(this.refs.date) ? [...this.refs.date] : [this.refs.date]
