@@ -53,13 +53,22 @@
                       class="input"
                       type="date"
                       value="{lastDate}"
+                      min="{fromDate}"
+                      max="{toDate}"
                     />
                   </div>
                 </div>
                 <div class="field">
                   <label class="label">Heure</label>
                   <div class="control">
-                    <input ref="time" class="input" type="time" />
+                    <input
+                      ref="time"
+                      class="input"
+                      type="time"
+                      min="00:00"
+                      max="23:45"
+                      step="900"
+                    />
                   </div>
                 </div>
                 <div class="field">
@@ -160,7 +169,10 @@
   </style>
 
   <script>
-    const tomorrow = new Date(Date.now() + 86400000)
+    const now = Date.now()
+    const today = new Date(now)
+    const until = new Date(now + 14 * 86400000)
+    const tomorrow = new Date(now + 86400000)
     const makeOffset = () => {
       const xx0 = 100 * tomorrow.getTimezoneOffset() / 60
       const xx = `${xx0}`.padStart(4, '0')
@@ -170,6 +182,8 @@
 
     const offset = makeOffset()
     this.show = false
+    this.fromDate = `${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate()}`
+    this.toDate = `${until.getFullYear()}-${until.getMonth() + 1}-${until.getDate()}`
     this.datesGiven = []
     this.dates = [
       {
