@@ -1,5 +1,5 @@
 <instructions-tag class="content">
-  <h3>Instructions</h3>
+  <h3 id="instructions">Instructions</h3>
   <p>
     Inscrivez votre <code>nom</code> pour qu'on vous reconnaisse ainsi que votre
     <code>email</code> si vous désirez obtenir des notifications.

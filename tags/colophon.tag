@@ -1,14 +1,14 @@
 <colophon-tag>
-  <h3 class="title is-3">Colophon</h3>
+  <h3 id="colophon" class="title is-3">Colophon</h3>
   <h4 class="subtitle is-4">Dépendances</h4>
   <div class="columns is-multiline is-mobile">
-    <div class="column is-12-mobile is-half-tablet is-one-quarter-desktop">
+    <div class="column is-12-mobile is-half-tablet is-one-third-desktop">
       <div class="card has-text-weight-bold"><pkg-tag pkg="{kyucan}" /></div>
     </div>
 
     <div
       each="{pkgs}"
-      class="column is-12-mobile is-half-tablet is-one-quarter-desktop"
+      class="column is-12-mobile is-half-tablet is-one-third-desktop"
     >
       <div class="card"><pkg-tag pkg="{this}" /></div>
     </div>
