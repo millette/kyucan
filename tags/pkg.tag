@@ -3,10 +3,12 @@
     <h4 class="card-header-title is-uppercase">{pkg.name}</h4>
     <h5 class="card-header-title">v{pkg.version}</h5>
   </div>
-  <p class="card-content">{pkg.description}</p>
 
-  <div class="card-content tags">
-    <span each="{pkg.keywords}" class="tag is-light is-rounded">{word}</span>
+  <div class="card-content">
+    <p>{pkg.description}</p>
+    <div class="tags">
+      <span each="{pkg.keywords}" class="tag is-light is-rounded">{word}</span>
+    </div>
   </div>
 
   <footer class="card-footer">
@@ -31,20 +33,15 @@
   <style>
     pre {
       whitespace: pre-wrap;
+      font-weight: normal;
     }
     .card-header-title,
     .card-content {
       color: black;
     }
-
-    /*
-    p.card-content {
-      height: 5.5rem;
+    .tags {
+      margin-top: 1rem;
     }
-    div.card-content.tags {
-      height: 6.5rem;
-    }
-    */
   </style>
 
   <script>
