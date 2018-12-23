@@ -4,7 +4,7 @@
   <div class="columns is-multiline is-mobile">
     <div
       each="{pkgs}"
-      class="column is-half-mobile is-one-third-tablet is-one-quarter-desktop"
+      class="column is-12-mobile is-half-tablet is-one-quarter-desktop"
     >
       <div class="card"><pkg-tag pkg="{this}" /></div>
     </div>
@@ -13,9 +13,6 @@
   <style>
     h3 {
       margin-top: 1em;
-    }
-    .notification {
-      height: 100%;
     }
   </style>
 

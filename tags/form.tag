@@ -63,7 +63,7 @@
                   </div>
                 </div>
                 <div class="field">
-                  <label class="label level">
+                  <label class="label level is-mobile">
                     <small class="level-item"> impossible </small>
                     <div class="level-item">Préférence</div>
                     <small class="level-item"> absolument </small>
