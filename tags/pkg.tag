@@ -1,44 +1,42 @@
 <pkg-tag>
-  <h4 class="title is-4">{name}</h4>
-  <h5 class="subtitle is-5">v{version}</h5>
-  <div class="content">
-    <p>{description}</p>
-    <p>
-      <a
-        if="{homepage}"
-        target="_blank"
-        rel="noopener noreferrer"
-        href="{homepage}"
-        >Site web</a
-      >
-    </p>
-    <p>
-      <button
-        onclick="{toggleWhole}"
-        type="button"
-        class="button is-warning is-fullwidth"
-      >
-        Montrer les détails
-      </button>
-    </p>
+  <div class="card-header">
+    <h4 class="card-header-title">{pkg.name}</h4>
+    <h5 class="card-header-title">v{pkg.version}</h5>
   </div>
+  <div class="card-content"><p>{pkg.description}</p></div>
+  <footer class="card-footer">
+    <a
+      class="card-footer-item"
+      if="{pkg.homepage}"
+      target="_blank"
+      rel="noopener noreferrer"
+      href="{pkg.homepage}"
+      >Site web</a
+    >
+    <a
+      class="card-footer-item"
+      onclick="{toggleWhole}"
+      class="card-footer-item"
+    >
+      {showWhole ? 'Cacher les détails' : 'Montrer les détails'}
+    </a>
+  </footer>
   <pre if="{showWhole}">{JSON.stringify(pkg, null, '  ')}</pre>
 
   <style>
     pre {
       whitespace: pre-wrap;
+    }
+    .card-header-title,
+    .card-content {
       color: black;
     }
   </style>
 
   <script>
-    this.name = this.opts.name
-    this.version = this.opts.version
-    this.description = this.opts.description
-    this.homepage = this.opts.homepage
     this.pkg = this.opts.pkg
-
     toggleWhole(ev) {
+      ev.preventDefault()
       const z = ev.target.closest('.column')
       if (this.showWhole) {
         z.classList.remove('is-12')
