@@ -20,13 +20,13 @@
       href="{pkg.homepage}"
       >Site web</a
     >
-    <a
-      class="card-footer-item"
+    <p
+      class="card-footer-item has-pointer"
       onclick="{toggleWhole}"
       class="card-footer-item"
     >
       {showWhole ? 'Cacher les détails' : 'Montrer les détails'}
-    </a>
+    </p>
   </footer>
   <pre if="{showWhole}">{JSON.stringify(pkg, null, '  ')}</pre>
 
@@ -36,6 +36,7 @@
       font-weight: normal;
     }
     .card-header-title,
+    .card-footer-item,
     .card-content {
       color: black;
     }
@@ -50,11 +51,12 @@
     toggleWhole(ev) {
       ev.preventDefault()
       const z = ev.target.closest('.column')
+      console.log('ZZZ:', z)
       if (this.showWhole) {
-        z.classList.remove('is-12')
+        z.classList.remove('is-full')
         this.showWhole = false
       } else {
-        z.classList.add('is-12')
+        z.classList.add('is-full')
         this.showWhole = true
       }
     }
