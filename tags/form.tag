@@ -53,10 +53,10 @@
                   <label class="label">Date #{n}</label>
                   <div class="control">
                     <input
+                      required
                       ref="date"
                       class="input"
                       type="date"
-                      value="{lastDate}"
                       min="{eventData.from}"
                       max="{eventData.until}"
                     />
@@ -180,7 +180,7 @@
   <script>
     this.mixin("event")
     this.show = false
-    this.showDates = false
+    this.showDates = true
     this.datesGiven = []
     this.dates = [
       {
