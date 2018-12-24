@@ -160,10 +160,6 @@
       max-height: 25rem;
     }
 
-    .has-pointer {
-      cursor: pointer;
-    }
-
     input[type="range"] {
       margin-bottom: 1rem;
     }
