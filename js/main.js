@@ -11,6 +11,8 @@ import "../tags/pkg.tag"
 import "../tags/form.tag"
 import "../tags/footer.tag"
 import oy from "./oy.js"
+import event from "./event.js"
 
 riot.mixin("oy", oy)
+riot.mixin("event", event)
 riot.mount("app")
