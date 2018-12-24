@@ -111,7 +111,7 @@
         <div if="{show}" class="column">
           <article class="message is-primary">
             <div class="message-header">
-              <p>Mes choix</p>
+              <h3 id="choices">Mes choix</h3>
               <button
                 onclick="{deleteMessage}"
                 class="delete"
@@ -197,7 +197,8 @@
       }
     }
 
-    addDate() {
+    addDate(e) {
+      e.preventUpdate = true
       const dates = Array.isArray(this.refs.date) ? [...this.refs.date] : [this.refs.date]
       const date = dates.pop()
       if (date.value) {
@@ -207,8 +208,12 @@
         })
       }
       this.update()
-      this.refs.time.slice(-1)[0].scrollIntoView()
+
       this.refs.date.slice(-1)[0].focus()
+      this.refs.time.slice(-1)[0].scrollIntoView({
+        behavior: 'smooth',
+        block: 'nearest'
+      })
     }
 
     ok(e) {
@@ -262,6 +267,7 @@
 
     submit(e) {
       e.preventDefault()
+      e.preventUpdate = true
       this.refs.name.classList.remove('is-danger')
       this.refs.email.classList.remove('is-danger')
       this.refs.name.classList.add('is-success')
@@ -277,6 +283,8 @@
 
       document.title = str
       this.show = true
+      this.update()
+      document.getElementById('choices').scrollIntoView({ behavior: 'smooth' })
     }
 
     if (!window.location.hash) setTimeout(() => this.refs.name.focus())
