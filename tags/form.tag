@@ -171,39 +171,15 @@
 
   <script>
     this.mixin("event")
-
     this.show = false
-
-    /*
-    this.mixin("event")
-    const zzz = this.event()
-    console.log('ZZZ:', zzz)
-    */
-
-    // this.eventData.from
-    // this.eventData.to
-
-    /*
-    const now = Date.now()
-    const today = new Date(now)
-    const until = new Date(now + 14 * 86400000)
-    const tomorrow = new Date(now + 86400000)
-
-    this.fromDate = `${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate()}`
-    this.toDate = `${until.getFullYear()}-${until.getMonth() + 1}-${until.getDate()}`
-    */
+    this.showDates = true
     this.datesGiven = []
     this.dates = [
       {
         n: 1,
-        // lastDate: `${tomorrow.getFullYear()}-${tomorrow.getMonth() + 1}-${tomorrow.getDate()}`
         lastDate: this.eventData.from
       }
     ]
-
-    const boop = (d, t) => new Date(`${d}T${t}`).toISOString().split('.')[0] + ' UTC'
-
-    this.showDates = true
 
     collapse() { this.showDates = !this.showDates }
 
@@ -261,6 +237,8 @@
 
     const offset = makeOffset()
 
+    const boop = (d, t) => new Date(`${d}T${t}`).toISOString().split('.')[0] + ' UTC'
+
     const parseDates = (times, date, i) => {
       if (!date.value) return
 
@@ -284,7 +262,6 @@
 
     submit(e) {
       e.preventDefault()
-
       this.refs.name.classList.remove('is-danger')
       this.refs.email.classList.remove('is-danger')
       this.refs.name.classList.add('is-success')
