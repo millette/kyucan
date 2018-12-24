@@ -36,12 +36,16 @@
                 />
               </div>
             </div>
-            <p if="{!showDates}" class="collapser" onclick="{collapse}">
+            <p
+              if="{!showDates}"
+              class="has-pointer collapser"
+              onclick="{collapse}"
+            >
               Ajouter des dates et des heures
             </p>
 
             <fieldset if="{showDates}">
-              <legend onclick="{collapse}">
+              <legend onclick="{collapse}" class="has-pointer">
                 Ajouter des dates et des heures
               </legend>
               <virtual each="{dates}">
@@ -155,6 +159,10 @@
       max-height: 25rem;
     }
 
+    .has-pointer {
+      cursor: pointer;
+    }
+
     input[type="range"] {
       margin-bottom: 1rem;
     }
@@ -172,7 +180,7 @@
   <script>
     this.mixin("event")
     this.show = false
-    this.showDates = true
+    this.showDates = false
     this.datesGiven = []
     this.dates = [
       {
