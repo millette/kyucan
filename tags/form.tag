@@ -17,7 +17,7 @@
                   required
                   class="input is-danger"
                   type="text"
-                  placeholder="Full name or first name"
+                  placeholder="Nom complet, prénom ou alias"
                   oninvalid="{invalid}"
                   onchange="{ok}"
                 />
@@ -285,6 +285,6 @@
       this.show = true
     }
 
-    setTimeout(() => this.refs.name.focus())
+    if (!window.location.hash) setTimeout(() => this.refs.name.focus())
   </script>
 </form-tag>
