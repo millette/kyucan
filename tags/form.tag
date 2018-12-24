@@ -53,10 +53,11 @@
                   <label class="label">Date #{n}</label>
                   <div class="control">
                     <input
-                      required
+                      required="{n === 1}"
                       ref="date"
                       class="input"
                       type="date"
+                      value="{n === 1 ? lastDate : ''}"
                       min="{eventData.from}"
                       max="{eventData.until}"
                     />
