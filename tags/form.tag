@@ -3,7 +3,7 @@
     <div class="container">
       <div class="columns">
         <div class="column">
-          <event-tag duration="90" />
+          <event-tag event="{eventData}" />
           <instructions-tag />
         </div>
 
@@ -53,8 +53,8 @@
                       class="input"
                       type="date"
                       value="{lastDate}"
-                      min="{fromDate}"
-                      max="{toDate}"
+                      min="{eventData.from}"
+                      max="{eventData.until}"
                     />
                   </div>
                 </div>
@@ -68,15 +68,15 @@
                       type="time"
                       min="00:00"
                       max="23:45"
-                      step="900"
+                      step="{eventData.step}"
                     />
                   </div>
                 </div>
                 <div class="field">
                   <label class="label level is-mobile">
-                    <small class="level-item"> impossible </small>
+                    <small class="level-item">si nécessaire</small>
                     <div class="level-item">Préférence</div>
-                    <small class="level-item"> absolument </small>
+                    <small class="level-item">absolument</small>
                   </label>
                   <div class="control">
                     <input
@@ -84,9 +84,9 @@
                       class="input"
                       type="range"
                       value="1"
-                      min="0"
+                      min="0.5"
                       max="1"
-                      step="0.04"
+                      step="0.05"
                     />
                   </div>
                 </div>
@@ -170,26 +170,34 @@
   </style>
 
   <script>
+    this.mixin("event")
+
+    this.show = false
+
+    /*
+    this.mixin("event")
+    const zzz = this.event()
+    console.log('ZZZ:', zzz)
+    */
+
+    // this.eventData.from
+    // this.eventData.to
+
+    /*
     const now = Date.now()
     const today = new Date(now)
     const until = new Date(now + 14 * 86400000)
     const tomorrow = new Date(now + 86400000)
-    const makeOffset = () => {
-      const xx0 = 100 * tomorrow.getTimezoneOffset() / 60
-      const xx = `${xx0}`.padStart(4, '0')
-      const s = xx0 < 0 ? '+' : '-'
-      return `UTC${s}${xx}`
-    }
 
-    const offset = makeOffset()
-    this.show = false
     this.fromDate = `${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate()}`
     this.toDate = `${until.getFullYear()}-${until.getMonth() + 1}-${until.getDate()}`
+    */
     this.datesGiven = []
     this.dates = [
       {
         n: 1,
-        lastDate: `${tomorrow.getFullYear()}-${tomorrow.getMonth() + 1}-${tomorrow.getDate()}`
+        // lastDate: `${tomorrow.getFullYear()}-${tomorrow.getMonth() + 1}-${tomorrow.getDate()}`
+        lastDate: this.eventData.from
       }
     ]
 
@@ -243,6 +251,15 @@
       if (this.refs.email.value) this.refs.email.classList.add('is-success')
       e.target.classList.add('is-danger')
     }
+
+    const makeOffset = () => {
+      const xx0 = 100 * new Date().getTimezoneOffset() / 60
+      const xx = `${xx0}`.padStart(4, '0')
+      const s = xx0 < 0 ? '+' : '-'
+      return `UTC${s}${xx}`
+    }
+
+    const offset = makeOffset()
 
     const parseDates = (times, date, i) => {
       if (!date.value) return

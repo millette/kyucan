@@ -1,11 +1,19 @@
 <event-tag class="content">
-  <h2>{title}</h2>
-  <p>{description}</p>
+  <h2>{eventData.title}</h2>
+  <p>{eventData.description}</p>
   <dl>
-    <virtual each="{data}">
-      <dt>{dt}</dt>
-      <dd>{dd}</dd>
-    </virtual>
+    <dt>Instigateur</dt>
+    <dd>{eventData.instigator}</dd>
+
+    <dt>Durée</dt>
+    <dd>{eventData.duration / 60}h</dd>
+
+    <dt>Lieu</dt>
+    <dd>{eventData.location}</dd>
+
+    <dt>Entre</dt>
+    <dd>{eventData.from}</dd>
+    <dd>{eventData.until}</dd>
   </dl>
 
   <style>
@@ -15,21 +23,6 @@
   </style>
 
   <script>
-    this.title = this.opts.title || "Meeting de préparation XYZ"
-    this.description = this.opts.description || "Description de l'événement..."
-    this.data = [
-      {
-        dt: "Instigateur",
-        dd: this.opts.instigateur || "Robin",
-      },
-      {
-        dt: "Durée",
-        dd: `${(this.opts.duration || 120) / 60}h`,
-      },
-      {
-        dt: "Lieu",
-        dd: this.opts.location || "Montréal...",
-      },
-    ]
+    this.eventData = this.opts.event
   </script>
 </event-tag>
