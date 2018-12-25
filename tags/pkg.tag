@@ -51,7 +51,6 @@
     toggleWhole(ev) {
       ev.preventDefault()
       const z = ev.target.closest('.column')
-      console.log('ZZZ:', z)
       if (this.showWhole) {
         z.classList.remove('is-full')
         this.showWhole = false
