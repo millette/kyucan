@@ -1,6 +1,6 @@
 "use strict"
 
-const voters = require("./votes.json").map(({ moments }) =>
+const voters = require("./votes-v4.json").map(({ moments }) =>
   moments.filter(({ local }) => local),
 )
 
@@ -76,9 +76,23 @@ const byN = sorted
   .reverse()
   .map(({ local, n }) => ({ local, n }))
 
+/*
 console.log("sums:", bySum)
 console.log("n:", voters.length, byN)
 console.log("muls:", byMul)
+*/
+
+console.log(
+  JSON.stringify(
+    {
+      bySum,
+      byN,
+      byMul,
+    },
+    null,
+    "  ",
+  ),
+)
 
 /*
 
