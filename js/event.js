@@ -25,6 +25,7 @@ const prefs = () => {
     let score = byDates[r].reduce((a, b) => a + b, 0)
     let n = byDates[r].length
     z.push({
+      pref: 1,
       local: r,
       n,
       score,

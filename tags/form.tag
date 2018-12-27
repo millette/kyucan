@@ -40,6 +40,41 @@
                 />
               </div>
             </div>
+
+            <fieldset>
+              <legend>Mes choix</legend>
+
+              <virtual each="{eventPrefs}">
+                <div class="{picked ? 'woot' : 'woot2'}">
+                  <label class="checkbox">
+                    <input type="checkbox" onchange="{pickPref}" />
+                    {local.replace('T', ' à ')}
+                  </label>
+
+                  <div if="{picked}">
+                    <div class="field">
+                      <label class="label level is-mobile">
+                        <small class="level-item">si nécessaire</small>
+                        <div class="level-item">Préférence</div>
+                        <small class="level-item">absolument</small>
+                      </label>
+                      <div class="control">
+                        <input
+                          onchange="{setPreference}"
+                          class="input"
+                          type="range"
+                          value="{pref}"
+                          min="0.5"
+                          max="1"
+                          step="0.05"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </virtual>
+            </fieldset>
+
             <p
               if="{!showDates}"
               class="has-pointer collapser"
@@ -48,65 +83,18 @@
               Ajouter des dates et des heures
             </p>
 
-            <fieldset if="{showDates}">
+            <fieldset class="{showDates ? '' : 'is-hidden'}">
               <legend onclick="{collapse}" class="has-pointer">
                 Ajouter des dates et des heures
               </legend>
-              <virtual each="{eventPrefs}">
-                <div class="field">
-                  <label class="label">Date {avg}</label>
-                  <div class="control">
-                    <input
-                      class="input"
-                      type="date"
-                      value="{local.split('T')[0]}"
-                      min="{local.split('T')[0]}"
-                      max="{local.split('T')[0]}"
-                    />
-                  </div>
-                </div>
-                <div class="field">
-                  <label class="label">Heure</label>
-                  <div class="control">
-                    <input
-                      class="input"
-                      type="time"
-                      value="{local.split('T')[1]}"
-                      min="{local.split('T')[1]}"
-                      max="{local.split('T')[1]}"
-                    />
-                  </div>
-                </div>
-
-                <div class="field">
-                  <label class="label level is-mobile">
-                    <small class="level-item">si nécessaire</small>
-                    <div class="level-item">Préférence</div>
-                    <small class="level-item">absolument</small>
-                  </label>
-                  <div class="control">
-                    <input
-                      ref="preference"
-                      class="input"
-                      type="range"
-                      value="{(score / n)}"
-                      min="0.5"
-                      max="1"
-                      step="0.05"
-                    />
-                  </div>
-                </div>
-              </virtual>
               <virtual each="{dates}">
                 <div class="field">
                   <label class="label">Date #{n}</label>
                   <div class="control">
                     <input
-                      required="{n === 1}"
                       ref="date"
                       class="input"
                       type="date"
-                      value="{n === 1 ? lastDate : ''}"
                       min="{eventData.from}"
                       max="{eventData.until}"
                     />
@@ -204,9 +192,28 @@
   </section>
 
   <style>
+    .woot,
+    .woot2 {
+      margin-bottom: 0.5rem;
+      padding: 0.25rem;
+    }
+
+    .woot:nth-child(odd) * {
+      background: #eef;
+    }
+
+    .woot:nth-child(even) * {
+      background: #fee;
+    }
+
     fieldset {
       overflow-y: scroll;
       max-height: 25rem;
+    }
+
+    label.checkbox {
+      color: black;
+      display: block;
     }
 
     input[type="range"] {
@@ -226,7 +233,7 @@
   <script>
     this.mixin("event")
     this.show = false
-    this.showDates = true
+    this.showDates = false
     this.datesGiven = []
     this.dates = [
       {
@@ -235,7 +242,36 @@
       }
     ]
 
-    collapse() { this.showDates = !this.showDates }
+    setPreference(ev) {
+      ev.item.pref = ev.target.value
+    }
+
+    pickPref(ev) {
+      ev.item.picked = ev.target.checked
+    }
+
+    collapse() {
+      this.showDates = !this.showDates
+      if (this.showDates && !this.refs.date.value) {
+        this.refs.date.value = this.refs.date.min
+      }
+    }
+
+    /*
+    collapse(e) {
+      e.preventUpdate = true
+      if (!this.showDates) {
+        this.showDates = true
+        this.update()
+        if (!this.refs.date.value) {
+          this.refs.date.value = this.refs.date.min
+        }
+      } else {
+        this.showDates = false
+        this.update()
+      }
+    }
+    */
 
     deleteMessage() { this.show = false }
 
@@ -263,11 +299,11 @@
       }
       this.update()
 
-      this.refs.date.slice(-1)[0].focus()
-      this.refs.time.slice(-1)[0].scrollIntoView({
-        behavior: 'smooth',
-        block: 'nearest'
-      })
+      const date2 = Array.isArray(this.refs.date) ? this.refs.date.slice(-1)[0] : this.refs.date
+      date2.focus()
+
+      const time = Array.isArray(this.refs.time) ? this.refs.time.slice(-1)[0] : this.refs.time
+      time.scrollIntoView({ behavior: 'smooth', block: 'nearest' })
     }
 
     ok(e) {
@@ -298,7 +334,24 @@
 
     const boop = (d, t) => new Date(`${d}T${t}`).toISOString().split('.')[0] + ' UTC'
 
-    const parseDates = (times, date, i) => {
+    const parsePicks = () => this.eventPrefs
+      .filter(({ picked }) => picked)
+      .map(({ local, pref }) => {
+        const [date, time] = local.split('T')
+        const o = {
+          date,
+          preference: `${100 * pref}%`
+        }
+        if (time) {
+          o.time = time
+          o.utcTime = boop(o.date, o.time)
+        } else {
+          o.offset = offset
+        }
+        return o
+      })
+
+    const parseDate = (times, date, i) => {
       if (!date.value) return
 
       const preferences = Array.isArray(this.refs.preference)
@@ -328,13 +381,23 @@
       if (this.refs.email.value) this.refs.email.classList.add('is-success')
       this.name = this.refs.name.value
       this.email = this.refs.email.value
+
+      // TODO: concat with this.datesGiven
+      /*
+      console.log(
+        'eventPrefs:',
+        parsePicks()
+      )*/
+
+
+
       const dates = Array.isArray(this.refs.date) ? this.refs.date : [this.refs.date]
       const times = Array.isArray(this.refs.time) ? this.refs.time : [this.refs.time]
-      this.datesGiven = []
-      dates.forEach(parseDates.bind(this, times))
+      this.datesGiven = [...parsePicks()]
+      dates.forEach(parseDate.bind(this, times))
+
       let str = `Kyucan - ${this.name}`
       if (this.datesGiven.length) str += (this.datesGiven.length === 1) ? ` (un moment)` : ` (${this.datesGiven.length} moments)`
-
       document.title = str
       this.show = true
       this.update()
