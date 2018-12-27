@@ -3,7 +3,11 @@
     <div class="container">
       <div class="columns">
         <div class="column">
-          <event-tag event="{eventData}" />
+          <event-tag
+            event="{eventData}"
+            votes="{eventVotes}"
+            prefs="{eventPrefs}"
+          />
           <instructions-tag />
         </div>
 
@@ -48,6 +52,51 @@
               <legend onclick="{collapse}" class="has-pointer">
                 Ajouter des dates et des heures
               </legend>
+              <virtual each="{eventPrefs}">
+                <div class="field">
+                  <label class="label">Date {avg}</label>
+                  <div class="control">
+                    <input
+                      class="input"
+                      type="date"
+                      value="{local.split('T')[0]}"
+                      min="{local.split('T')[0]}"
+                      max="{local.split('T')[0]}"
+                    />
+                  </div>
+                </div>
+                <div class="field">
+                  <label class="label">Heure</label>
+                  <div class="control">
+                    <input
+                      class="input"
+                      type="time"
+                      value="{local.split('T')[1]}"
+                      min="{local.split('T')[1]}"
+                      max="{local.split('T')[1]}"
+                    />
+                  </div>
+                </div>
+
+                <div class="field">
+                  <label class="label level is-mobile">
+                    <small class="level-item">si nécessaire</small>
+                    <div class="level-item">Préférence</div>
+                    <small class="level-item">absolument</small>
+                  </label>
+                  <div class="control">
+                    <input
+                      ref="preference"
+                      class="input"
+                      type="range"
+                      value="{(score / n)}"
+                      min="0.5"
+                      max="1"
+                      step="0.05"
+                    />
+                  </div>
+                </div>
+              </virtual>
               <virtual each="{dates}">
                 <div class="field">
                   <label class="label">Date #{n}</label>
