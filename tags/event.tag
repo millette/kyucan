@@ -15,7 +15,6 @@
     <dd>{eventData.from}</dd>
     <dd>{eventData.until}</dd>
   </dl>
-  <pre>{JSON.stringify(eventPrefs, null, '  ')}</pre>
 
   <style>
     dl {
