@@ -24,7 +24,5 @@
 
   <script>
     this.eventData = this.opts.event
-    this.eventVotes = this.opts.votes
-    this.eventPrefs = this.opts.prefs
   </script>
 </event-tag>
