@@ -13,7 +13,8 @@ const dates = eventVotes
   )
   .reduce((a, b) => [...a, ...b], [])
 
-const prefs = () => {
+const prefs = (opts) => {
+  if (!opts.top) opts.top = 3
   const byDates = {}
   dates.forEach(({ local, preference }) => {
     if (!byDates[local]) byDates[local] = []
@@ -38,14 +39,19 @@ const prefs = () => {
       if (a.avg < b.avg) return -1
       return 0
     })
-    .reverse()
+    .slice(-opts.top)
+    .sort((a, b) => {
+      if (a.local > b.local) return 1
+      if (a.local < b.local) return -1
+      return 0
+    })
 }
 
 module.exports = {
-  init: function() {
+  init: function(opts) {
     this.eventData = eventData
     this.eventVotes = eventVotes
     this.eventDates = dates
-    this.eventPrefs = prefs()
+    this.eventPrefs = prefs(opts)
   },
 }
