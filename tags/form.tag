@@ -3,15 +3,11 @@
     <div class="container">
       <div class="columns">
         <div class="column">
-          <event-tag
-            event="{eventData}"
-            votes="{eventVotes}"
-            prefs="{eventPrefs}"
-          />
+          <event-tag event="{eventData}" />
           <instructions-tag />
         </div>
 
-        <div class="column">
+        <div class="column is-narrow">
           <form class="box" onsubmit="{submit}">
             <div class="field">
               <label class="label">Nom</label>
@@ -54,9 +50,9 @@
                   <div if="{picked}">
                     <div class="field">
                       <label class="label level is-mobile">
-                        <small class="level-item">si nécessaire</small>
+                        <small class="level-item">au besoin</small>
                         <div class="level-item">Préférence</div>
-                        <small class="level-item">absolument</small>
+                        <small class="level-item">oui</small>
                       </label>
                       <div class="control">
                         <input
@@ -88,48 +84,50 @@
                 Ajouter des dates et des heures
               </legend>
               <virtual each="{dates}">
-                <div class="field">
-                  <label class="label">Date #{n}</label>
-                  <div class="control">
-                    <input
-                      ref="date"
-                      class="input"
-                      type="date"
-                      min="{eventData.from}"
-                      max="{eventData.until}"
-                    />
+                <div class="woot">
+                  <div class="field">
+                    <label class="label">Date #{n}</label>
+                    <div class="control">
+                      <input
+                        ref="date"
+                        class="input"
+                        type="date"
+                        min="{eventData.from}"
+                        max="{eventData.until}"
+                      />
+                    </div>
                   </div>
-                </div>
-                <div class="field">
-                  <label class="label">Heure</label>
-                  <div class="control">
-                    <input
-                      onchange="{timeChange}"
-                      ref="time"
-                      class="input"
-                      type="time"
-                      min="00:00"
-                      max="23:45"
-                      step="{eventData.step}"
-                    />
+                  <div class="field">
+                    <label class="label">Heure</label>
+                    <div class="control">
+                      <input
+                        onchange="{timeChange}"
+                        ref="time"
+                        class="input"
+                        type="time"
+                        min="00:00"
+                        max="23:45"
+                        step="{eventData.step}"
+                      />
+                    </div>
                   </div>
-                </div>
-                <div class="field">
-                  <label class="label level is-mobile">
-                    <small class="level-item">si nécessaire</small>
-                    <div class="level-item">Préférence</div>
-                    <small class="level-item">absolument</small>
-                  </label>
-                  <div class="control">
-                    <input
-                      ref="preference"
-                      class="input"
-                      type="range"
-                      value="1"
-                      min="0.5"
-                      max="1"
-                      step="0.05"
-                    />
+                  <div class="field">
+                    <label class="label level is-mobile">
+                      <small class="level-item">au besoin</small>
+                      <div class="level-item">Préférence</div>
+                      <small class="level-item">oui</small>
+                    </label>
+                    <div class="control">
+                      <input
+                        ref="preference"
+                        class="input"
+                        type="range"
+                        value="1"
+                        min="0.5"
+                        max="1"
+                        step="0.05"
+                      />
+                    </div>
                   </div>
                 </div>
               </virtual>
@@ -381,15 +379,6 @@
       if (this.refs.email.value) this.refs.email.classList.add('is-success')
       this.name = this.refs.name.value
       this.email = this.refs.email.value
-
-      // TODO: concat with this.datesGiven
-      /*
-      console.log(
-        'eventPrefs:',
-        parsePicks()
-      )*/
-
-
 
       const dates = Array.isArray(this.refs.date) ? this.refs.date : [this.refs.date]
       const times = Array.isArray(this.refs.time) ? this.refs.time : [this.refs.time]
