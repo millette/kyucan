@@ -1,116 +1,52 @@
 <form-tag>
-  <section class="section">
-    <div class="container">
-      <div class="columns">
-        <div class="column">
-          <event-tag event="{eventData}" />
-          <instructions-tag />
-        </div>
+  <section class="section container">
+    <div class="columns">
+      <div class="column">
+        <event-tag event="{eventData}" />
+        <instructions-tag />
+      </div>
 
-        <div class="column is-narrow">
-          <form class="box" onsubmit="{submit}">
-            <div class="field">
-              <label class="label">Nom</label>
-              <div class="control">
-                <input
-                  ref="name"
-                  required
-                  class="input is-danger"
-                  type="text"
-                  placeholder="Nom complet, prénom ou alias"
-                  oninvalid="{invalid}"
-                  onchange="{ok}"
-                />
-              </div>
+      <div class="column is-narrow">
+        <form class="box" onsubmit="{submit}">
+          <div class="field">
+            <label class="label">Nom</label>
+            <div class="control">
+              <input
+                ref="name"
+                required
+                class="input is-danger"
+                type="text"
+                placeholder="Nom complet, prénom ou alias"
+                oninvalid="{invalid}"
+                onchange="{ok}"
+              />
             </div>
+          </div>
 
-            <div class="field">
-              <label class="label">Email</label>
-              <div class="control">
-                <input
-                  ref="email"
-                  class="input"
-                  type="email"
-                  placeholder="name@example.com"
-                  oninvalid="{invalid}"
-                />
-              </div>
+          <div class="field">
+            <label class="label">Email</label>
+            <div class="control">
+              <input
+                ref="email"
+                class="input"
+                type="email"
+                placeholder="name@example.com"
+                oninvalid="{invalid}"
+              />
             </div>
+          </div>
 
-            <fieldset>
-              <legend>Mes choix</legend>
+          <fieldset>
+            <legend>Mes choix</legend>
 
-              <virtual each="{eventPrefs}">
-                <div class="{picked ? 'woot' : 'woot2'}">
-                  <label class="checkbox">
-                    <input type="checkbox" onchange="{pickPref}" />
-                    {local.replace('T', ' à ')}
-                  </label>
+            <virtual each="{eventPrefs}">
+              <div class="{picked ? 'woot' : 'woot2'}">
+                <label class="checkbox">
+                  <input type="checkbox" onchange="{pickPref}" />
+                  {local.replace('T', ' à ')}
+                </label>
 
-                  <div if="{picked}">
-                    <div class="field">
-                      <label class="label level is-mobile">
-                        <small class="level-item">au besoin</small>
-                        <div class="level-item">Préférence</div>
-                        <small class="level-item">oui</small>
-                      </label>
-                      <div class="control">
-                        <input
-                          onchange="{setPreference}"
-                          class="input"
-                          type="range"
-                          value="{pref}"
-                          min="0.5"
-                          max="1"
-                          step="0.05"
-                        />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </virtual>
-            </fieldset>
-
-            <p
-              if="{!showDates}"
-              class="has-pointer collapser"
-              onclick="{collapse}"
-            >
-              Ajouter des dates et des heures
-            </p>
-
-            <fieldset class="{showDates ? '' : 'is-hidden'}">
-              <legend onclick="{collapse}" class="has-pointer">
-                Ajouter des dates et des heures
-              </legend>
-              <virtual each="{dates}">
-                <div class="woot">
-                  <div class="field">
-                    <label class="label">Date #{n}</label>
-                    <div class="control">
-                      <input
-                        ref="date"
-                        class="input"
-                        type="date"
-                        min="{eventData.from}"
-                        max="{eventData.until}"
-                      />
-                    </div>
-                  </div>
-                  <div class="field">
-                    <label class="label">Heure</label>
-                    <div class="control">
-                      <input
-                        onchange="{timeChange}"
-                        ref="time"
-                        class="input"
-                        type="time"
-                        min="00:00"
-                        max="23:45"
-                        step="{eventData.step}"
-                      />
-                    </div>
-                  </div>
+                <div if="{picked}">
                   <div class="field">
                     <label class="label level is-mobile">
                       <small class="level-item">au besoin</small>
@@ -119,10 +55,10 @@
                     </label>
                     <div class="control">
                       <input
-                        ref="preference"
+                        onchange="{setPreference}"
                         class="input"
                         type="range"
-                        value="1"
+                        value="{pref}"
                         min="0.5"
                         max="1"
                         step="0.05"
@@ -130,61 +66,123 @@
                     </div>
                   </div>
                 </div>
-              </virtual>
-              <div class="control">
-                <button
-                  onclick="{addDate}"
-                  type="button"
-                  class="content button is-info"
-                >
-                  Ajouter d'autres dates
-                </button>
               </div>
-            </fieldset>
+            </virtual>
+          </fieldset>
+
+          <p
+            if="{!showDates}"
+            class="has-pointer collapser"
+            onclick="{collapse}"
+          >
+            Ajouter des dates et des heures
+          </p>
+
+          <fieldset class="{showDates ? '' : 'is-hidden'}">
+            <legend onclick="{collapse}" class="has-pointer">
+              Ajouter des dates et des heures
+            </legend>
+            <virtual each="{dates}">
+              <div class="woot">
+                <div class="field">
+                  <label class="label">Date #{n}</label>
+                  <div class="control">
+                    <input
+                      ref="date"
+                      class="input"
+                      type="date"
+                      min="{eventData.from}"
+                      max="{eventData.until}"
+                    />
+                  </div>
+                </div>
+                <div class="field">
+                  <label class="label">Heure</label>
+                  <div class="control">
+                    <input
+                      onchange="{timeChange}"
+                      ref="time"
+                      class="input"
+                      type="time"
+                      min="00:00"
+                      max="23:45"
+                      step="{eventData.step}"
+                    />
+                  </div>
+                </div>
+                <div class="field">
+                  <label class="label level is-mobile">
+                    <small class="level-item">au besoin</small>
+                    <div class="level-item">Préférence</div>
+                    <small class="level-item">oui</small>
+                  </label>
+                  <div class="control">
+                    <input
+                      ref="preference"
+                      class="input"
+                      type="range"
+                      value="1"
+                      min="0.5"
+                      max="1"
+                      step="0.05"
+                    />
+                  </div>
+                </div>
+              </div>
+            </virtual>
             <div class="control">
-              <button class="content button is-primary is-fullwidth">
-                2<sup>e</sup>&nbsp;étape →
+              <button
+                onclick="{addDate}"
+                type="button"
+                class="content button is-info"
+              >
+                Ajouter d'autres dates
               </button>
             </div>
-          </form>
-        </div>
-        <div if="{show}" class="column">
-          <article class="message is-primary">
-            <div class="message-header">
-              <h3 id="choices">Mes choix</h3>
-              <button
-                onclick="{deleteMessage}"
-                class="delete"
-                aria-label="delete"
-              ></button>
-            </div>
-            <div class="message-body content">
+          </fieldset>
+          <div class="control">
+            <button class="content button is-primary is-fullwidth">
+              2<sup>e</sup>&nbsp;étape →
+            </button>
+          </div>
+        </form>
+      </div>
+      <div if="{show}" class="column">
+        <article class="message is-primary">
+          <div class="message-header">
+            <h3 id="choices">Mes choix</h3>
+            <button
+              onclick="{deleteMessage}"
+              class="delete"
+              aria-label="delete"
+            ></button>
+          </div>
+          <div class="message-body content">
+            <dl>
+              <dt>Nom</dt>
+              <dd>{name}</dd>
+            </dl>
+            <virtual if="{email}">
               <dl>
-                <dt>Nom</dt>
-                <dd>{name}</dd>
+                <dt>Email</dt>
+                <dd>{email}</dd>
               </dl>
-              <virtual if="{email}">
-                <dl>
-                  <dt>Email</dt>
-                  <dd>{email}</dd>
-                </dl>
-              </virtual>
-              <virtual each="{datesGiven}">
-                <dl>
-                  <dt>Quand</dt>
-                  <dd>
-                    {date} <span if="{time}"> à {time} (heure locale)</span>
-                    <span if="{offset}"> ({offset})</span>
-                  </dd>
-                  <dd if="{utcTime}"><small>{utcTime}</small></dd>
+            </virtual>
+            <virtual each="{datesGiven}">
+              <dl>
+                <dt>Quand</dt>
+                <dd>
+                  {date} <span if="{time}"> à {time} (heure locale)</span>
+                  <span if="{offset}"> ({offset})</span>
+                </dd>
+                <dd if="{utcTime}"><small>{utcTime}</small></dd>
 
-                  <dt>Préférence</dt>
-                  <dd>{preference}</dd>
-                </dl>
-              </virtual>
-            </div>
-          </article>
-        </div>
+                <dt>Préférence</dt>
+                <dd>{preference}</dd>
+              </dl>
+            </virtual>
+          </div>
+        </article>
       </div>
     </div>
   </section>
