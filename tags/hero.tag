@@ -4,7 +4,7 @@
       <div class="container">
         <aside class="menu is-pulled-right">
           <ul class="menu-list">
-            <li><a href="#instructions">Instructions</a></li>
+            <li><a href="#">Accueil</a></li>
             <li><a href="#colophon">Colophon</a></li>
           </ul>
         </aside>
