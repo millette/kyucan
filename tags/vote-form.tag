@@ -39,24 +39,7 @@
           </label>
 
           <div if="{picked}">
-            <div class="field">
-              <label class="label level is-mobile">
-                <small class="level-item">au besoin</small>
-                <div class="level-item">Préférence</div>
-                <small class="level-item">oui</small>
-              </label>
-              <div class="control">
-                <input
-                  onchange="{setPreference}"
-                  class="input"
-                  type="range"
-                  value="{pref}"
-                  min="0.5"
-                  max="1"
-                  step="0.05"
-                />
-              </div>
-            </div>
+            <preference-tag set-preference="{setPreference}" pref="{pref}" />
           </div>
         </div>
       </virtual>
@@ -98,24 +81,7 @@
               />
             </div>
           </div>
-          <div class="field">
-            <label class="label level is-mobile">
-              <small class="level-item">au besoin</small>
-              <div class="level-item">Préférence</div>
-              <small class="level-item">oui</small>
-            </label>
-            <div class="control">
-              <input
-                ref="preference"
-                class="input"
-                type="range"
-                value="1"
-                min="0.5"
-                max="1"
-                step="0.05"
-              />
-            </div>
-          </div>
+          <preference-tag ref="preference" />
         </div>
       </virtual>
       <div class="control">
@@ -182,8 +148,8 @@
       if (!date.value) return
 
       const preferences = Array.isArray(this.refs.preference)
-        ? this.refs.preference.map((x) => x.valueAsNumber)
-        : [this.refs.preference.valueAsNumber]
+        ? this.refs.preference.map((x) => x.refs.preference.valueAsNumber)
+        : [this.refs.preference.refs.preference.valueAsNumber]
 
       const o = {
         date: date.value,
@@ -282,6 +248,6 @@
         e.target.classList.add('is-danger')
     }
 
-    this.on('mount', () => this.refs.name.focus())
+    // this.on('mount', () => this.refs.name.focus())
   </script>
 </vote-form>
