@@ -229,170 +229,155 @@
   </style>
 
   <script>
-    this.mixin("event")
-    this.show = false
-    this.showDates = false
-    this.datesGiven = []
-    this.dates = [
-      {
-        n: 1,
-        lastDate: this.eventData.from
-      }
-    ]
+     this.mixin("event")
+     this.mixin("routed")
+     this.show = false
+     this.showDates = false
+     this.datesGiven = []
+     this.dates = [
+       {
+         n: 1,
+         lastDate: this.eventData.from
+       }
+     ]
 
-    setPreference(ev) {
-      ev.item.pref = ev.target.value
+     setPreference(ev) {
+       ev.item.pref = ev.target.value
+     }
+
+     pickPref(ev) {
+       ev.item.picked = ev.target.checked
+     }
+
+     collapse() {
+       this.showDates = !this.showDates
+       if (this.showDates && !this.refs.date.value) {
+         this.refs.date.value = this.refs.date.min
+       }
+     }
+
+     deleteMessage() { this.show = false }
+
+     timeChange(ev) {
+       // chrome handles the step attribute correctly
+       // but firefox doesn't so we handle it here
+       if (!ev.target.value) return
+       const [h, m] = ev.target.value.split(':')
+       const step = Math.round(ev.target.step / 60)
+       if (m % step) {
+         const nm = `${(step * Math.ceil(m / step)) % 60}`.padStart(2, '0')
+         ev.target.value = `${h}:${nm}`
+       }
+     }
+
+     addDate(e) {
+       e.preventUpdate = true
+       const dates = Array.isArray(this.refs.date) ? [...this.refs.date] : [this.refs.date]
+       const date = dates.pop()
+       if (date.value) {
+         this.dates.push({
+           n: dates.length + 2,
+           lastDate: date.value
+         })
+       }
+       this.update()
+
+       const date2 = Array.isArray(this.refs.date) ? this.refs.date.slice(-1)[0] : this.refs.date
+       date2.focus()
+
+       const time = Array.isArray(this.refs.time) ? this.refs.time.slice(-1)[0] : this.refs.time
+       time.scrollIntoView({ behavior: 'smooth', block: 'nearest' })
+     }
+
+     ok(e) {
+       const name = e.target.classList
+       name.remove('is-danger')
+       if (this.refs.name.value) {
+         name.add('is-success')
+       } else {
+         name.add('is-danger')
+         name.remove('is-success')
+       }
     }
 
-    pickPref(ev) {
-      ev.item.picked = ev.target.checked
-    }
+     invalid(e) {
+       this.refs.email.classList.remove('is-danger')
+       if (this.refs.email.value) this.refs.email.classList.add('is-success')
+       e.target.classList.add('is-danger')
+     }
 
-    collapse() {
-      this.showDates = !this.showDates
-      if (this.showDates && !this.refs.date.value) {
-        this.refs.date.value = this.refs.date.min
-      }
-    }
+     const makeOffset = () => {
+       const xx0 = 100 * new Date().getTimezoneOffset() / 60
+       const xx = `${xx0}`.padStart(4, '0')
+       const s = xx0 < 0 ? '+' : '-'
+       return `UTC${s}${xx}`
+     }
 
-    /*
-    collapse(e) {
-      e.preventUpdate = true
-      if (!this.showDates) {
-        this.showDates = true
-        this.update()
-        if (!this.refs.date.value) {
-          this.refs.date.value = this.refs.date.min
-        }
-      } else {
-        this.showDates = false
-        this.update()
-      }
-    }
-    */
+     const offset = makeOffset()
 
-    deleteMessage() { this.show = false }
+     const boop = (d, t) => new Date(`${d}T${t}`).toISOString().split('.')[0] + ' UTC'
 
-    timeChange(ev) {
-      // chrome handles the step attribute correctly
-      // but firefox doesn't so we handle it here
-      if (!ev.target.value) return
-      const [h, m] = ev.target.value.split(':')
-      const step = Math.round(ev.target.step / 60)
-      if (m % step) {
-        const nm = `${(step * Math.ceil(m / step)) % 60}`.padStart(2, '0')
-        ev.target.value = `${h}:${nm}`
-      }
-    }
+     const parsePicks = () => this.eventPrefs
+       .filter(({ picked }) => picked)
+       .map(({ local, pref }) => {
+         const [date, time] = local.split('T')
+         const o = {
+           date,
+           preference: `${100 * pref}%`
+         }
+         if (time) {
+           o.time = time
+           o.utcTime = boop(o.date, o.time)
+         } else {
+           o.offset = offset
+         }
+         return o
+       })
 
-    addDate(e) {
-      e.preventUpdate = true
-      const dates = Array.isArray(this.refs.date) ? [...this.refs.date] : [this.refs.date]
-      const date = dates.pop()
-      if (date.value) {
-        this.dates.push({
-          n: dates.length + 2,
-          lastDate: date.value
-        })
-      }
-      this.update()
+     const parseDate = (times, date, i) => {
+       if (!date.value) return
 
-      const date2 = Array.isArray(this.refs.date) ? this.refs.date.slice(-1)[0] : this.refs.date
-      date2.focus()
+       const preferences = Array.isArray(this.refs.preference)
+         ? this.refs.preference.map((x) => x.valueAsNumber)
+         : [this.refs.preference.valueAsNumber]
 
-      const time = Array.isArray(this.refs.time) ? this.refs.time.slice(-1)[0] : this.refs.time
-      time.scrollIntoView({ behavior: 'smooth', block: 'nearest' })
-    }
+       const o = {
+         date: date.value,
+         preference: `${100 * preferences[i]}%`
+       }
 
-    ok(e) {
-      const name = e.target.classList
-      name.remove('is-danger')
-      if (this.refs.name.value) {
-        name.add('is-success')
-      } else {
-        name.add('is-danger')
-        name.remove('is-success')
-      }
-    }
+       if (times[i].value) {
+         o.time = times[i].value
+         o.utcTime = boop(o.date, o.time)
+       } else {
+         o.offset = offset
+       }
+       this.datesGiven.push(o)
+     }
 
-    invalid(e) {
-      this.refs.email.classList.remove('is-danger')
-      if (this.refs.email.value) this.refs.email.classList.add('is-success')
-      e.target.classList.add('is-danger')
-    }
+     submit(e) {
+       e.preventDefault()
+       e.preventUpdate = true
+       this.refs.name.classList.remove('is-danger')
+       this.refs.email.classList.remove('is-danger')
+       this.refs.name.classList.add('is-success')
+       if (this.refs.email.value) this.refs.email.classList.add('is-success')
+       this.name = this.refs.name.value
+       this.email = this.refs.email.value
 
-    const makeOffset = () => {
-      const xx0 = 100 * new Date().getTimezoneOffset() / 60
-      const xx = `${xx0}`.padStart(4, '0')
-      const s = xx0 < 0 ? '+' : '-'
-      return `UTC${s}${xx}`
-    }
+       const dates = Array.isArray(this.refs.date) ? this.refs.date : [this.refs.date]
+       const times = Array.isArray(this.refs.time) ? this.refs.time : [this.refs.time]
+       this.datesGiven = [...parsePicks()]
+       dates.forEach(parseDate.bind(this, times))
 
-    const offset = makeOffset()
+       let str = `Kyucan - ${this.name}`
+       if (this.datesGiven.length) str += (this.datesGiven.length === 1) ? ` (un moment)` : ` (${this.datesGiven.length} moments)`
+       document.title = str
+       this.show = true
+       this.update()
+       document.getElementById('choices').scrollIntoView({ behavior: 'smooth' })
+     }
 
-    const boop = (d, t) => new Date(`${d}T${t}`).toISOString().split('.')[0] + ' UTC'
-
-    const parsePicks = () => this.eventPrefs
-      .filter(({ picked }) => picked)
-      .map(({ local, pref }) => {
-        const [date, time] = local.split('T')
-        const o = {
-          date,
-          preference: `${100 * pref}%`
-        }
-        if (time) {
-          o.time = time
-          o.utcTime = boop(o.date, o.time)
-        } else {
-          o.offset = offset
-        }
-        return o
-      })
-
-    const parseDate = (times, date, i) => {
-      if (!date.value) return
-
-      const preferences = Array.isArray(this.refs.preference)
-        ? this.refs.preference.map((x) => x.valueAsNumber)
-        : [this.refs.preference.valueAsNumber]
-
-      const o = {
-        date: date.value,
-        preference: `${100 * preferences[i]}%`
-      }
-
-      if (times[i].value) {
-        o.time = times[i].value
-        o.utcTime = boop(o.date, o.time)
-      } else {
-        o.offset = offset
-      }
-      this.datesGiven.push(o)
-    }
-
-    submit(e) {
-      e.preventDefault()
-      e.preventUpdate = true
-      this.refs.name.classList.remove('is-danger')
-      this.refs.email.classList.remove('is-danger')
-      this.refs.name.classList.add('is-success')
-      if (this.refs.email.value) this.refs.email.classList.add('is-success')
-      this.name = this.refs.name.value
-      this.email = this.refs.email.value
-
-      const dates = Array.isArray(this.refs.date) ? this.refs.date : [this.refs.date]
-      const times = Array.isArray(this.refs.time) ? this.refs.time : [this.refs.time]
-      this.datesGiven = [...parsePicks()]
-      dates.forEach(parseDate.bind(this, times))
-
-      let str = `Kyucan - ${this.name}`
-      if (this.datesGiven.length) str += (this.datesGiven.length === 1) ? ` (un moment)` : ` (${this.datesGiven.length} moments)`
-      document.title = str
-      this.show = true
-      this.update()
-      document.getElementById('choices').scrollIntoView({ behavior: 'smooth' })
-    }
-
-    if (!window.location.hash) setTimeout(() => this.refs.name.focus())
+     this.on('mount', () => this.refs.name.focus())
   </script>
 </form-tag>
