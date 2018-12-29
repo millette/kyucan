@@ -7,145 +7,13 @@
       </div>
 
       <div class="column is-narrow">
-        <form class="box" onsubmit="{submit}">
-          <div class="field">
-            <label class="label">Nom</label>
-            <div class="control">
-              <input
-                ref="name"
-                required
-                class="input is-danger"
-                type="text"
-                placeholder="Nom complet, prénom ou alias"
-                oninvalid="{invalid}"
-                onchange="{ok}"
-              />
-            </div>
-          </div>
-
-          <div class="field">
-            <label class="label">Email</label>
-            <div class="control">
-              <input
-                ref="email"
-                class="input"
-                type="email"
-                placeholder="name@example.com"
-                oninvalid="{invalid}"
-              />
-            </div>
-          </div>
-
-          <fieldset>
-            <legend>Mes choix</legend>
-
-            <virtual each="{eventPrefs}">
-              <div class="{picked ? 'woot' : 'woot2'}">
-                <label class="checkbox">
-                  <input type="checkbox" onchange="{pickPref}" />
-                  {local.replace('T', ' à ')}
-                </label>
-
-                <div if="{picked}">
-                  <div class="field">
-                    <label class="label level is-mobile">
-                      <small class="level-item">au besoin</small>
-                      <div class="level-item">Préférence</div>
-                      <small class="level-item">oui</small>
-                    </label>
-                    <div class="control">
-                      <input
-                        onchange="{setPreference}"
-                        class="input"
-                        type="range"
-                        value="{pref}"
-                        min="0.5"
-                        max="1"
-                        step="0.05"
-                      />
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </virtual>
-          </fieldset>
-
-          <p
-            if="{!showDates}"
-            class="has-pointer collapser"
-            onclick="{collapse}"
-          >
-            Ajouter des dates et des heures
-          </p>
-
-          <fieldset class="{showDates ? '' : 'is-hidden'}">
-            <legend onclick="{collapse}" class="has-pointer">
-              Ajouter des dates et des heures
-            </legend>
-            <virtual each="{dates}">
-              <div class="woot">
-                <div class="field">
-                  <label class="label">Date #{n}</label>
-                  <div class="control">
-                    <input
-                      ref="date"
-                      class="input"
-                      type="date"
-                      min="{eventData.from}"
-                      max="{eventData.until}"
-                    />
-                  </div>
-                </div>
-                <div class="field">
-                  <label class="label">Heure</label>
-                  <div class="control">
-                    <input
-                      onchange="{timeChange}"
-                      ref="time"
-                      class="input"
-                      type="time"
-                      min="00:00"
-                      max="23:45"
-                      step="{eventData.step}"
-                    />
-                  </div>
-                </div>
-                <div class="field">
-                  <label class="label level is-mobile">
-                    <small class="level-item">au besoin</small>
-                    <div class="level-item">Préférence</div>
-                    <small class="level-item">oui</small>
-                  </label>
-                  <div class="control">
-                    <input
-                      ref="preference"
-                      class="input"
-                      type="range"
-                      value="1"
-                      min="0.5"
-                      max="1"
-                      step="0.05"
-                    />
-                  </div>
-                </div>
-              </div>
-            </virtual>
-            <div class="control">
-              <button
-                onclick="{addDate}"
-                type="button"
-                class="content button is-info"
-              >
-                Ajouter d'autres dates
-              </button>
-            </div>
-          </fieldset>
-          <div class="control">
-            <button class="content button is-primary is-fullwidth">
-              2<sup>e</sup>&nbsp;étape →
-            </button>
-          </div>
-        </form>
+        <vote-form
+          submit="{submit}"
+          event-prefs="{eventPrefs}"
+          event-data="{eventData}"
+          add-date="{addDate}"
+          set-show="{setShow}"
+        />
       </div>
       <div if="{show}" class="column">
         <article class="message is-primary">
@@ -230,15 +98,28 @@
      this.mixin("event")
      this.mixin("routed")
      this.show = false
-     this.showDates = false
+     // this.showDates = false
      this.datesGiven = []
+
+     /*
      this.dates = [
        {
          n: 1,
          lastDate: this.eventData.from
        }
      ]
+     */
 
+     setShow(show, datesGiven, name, email) {
+        this.show = show
+        if (datesGiven) this.datesGiven = datesGiven
+        if (name) this.name = name
+        if (email) this.email = email
+        this.update()
+        if (show) document.getElementById('choices').scrollIntoView({ behavior: 'smooth' })
+     }
+
+     /*
      setPreference(ev) {
        ev.item.pref = ev.target.value
      }
@@ -246,16 +127,20 @@
      pickPref(ev) {
        ev.item.picked = ev.target.checked
      }
+     */
 
+     /*
      collapse() {
        this.showDates = !this.showDates
        if (this.showDates && !this.refs.date.value) {
          this.refs.date.value = this.refs.date.min
        }
      }
+     */
 
      deleteMessage() { this.show = false }
 
+     /*
      timeChange(ev) {
        // chrome handles the step attribute correctly
        // but firefox doesn't so we handle it here
@@ -267,7 +152,9 @@
          ev.target.value = `${h}:${nm}`
        }
      }
+     */
 
+     /*
      addDate(e) {
        e.preventUpdate = true
        const dates = Array.isArray(this.refs.date) ? [...this.refs.date] : [this.refs.date]
@@ -286,7 +173,9 @@
        const time = Array.isArray(this.refs.time) ? this.refs.time.slice(-1)[0] : this.refs.time
        time.scrollIntoView({ behavior: 'smooth', block: 'nearest' })
      }
+     */
 
+     /*
      ok(e) {
        const name = e.target.classList
        name.remove('is-danger')
@@ -303,7 +192,9 @@
        if (this.refs.email.value) this.refs.email.classList.add('is-success')
        e.target.classList.add('is-danger')
      }
+     */
 
+     /*
      const makeOffset = () => {
        const xx0 = 100 * new Date().getTimezoneOffset() / 60
        const xx = `${xx0}`.padStart(4, '0')
@@ -352,7 +243,9 @@
        }
        this.datesGiven.push(o)
      }
+     */
 
+     /*
      submit(e) {
        e.preventDefault()
        e.preventUpdate = true
@@ -375,7 +268,6 @@
        this.update()
        document.getElementById('choices').scrollIntoView({ behavior: 'smooth' })
      }
-
-     this.on('mount', () => this.refs.name.focus())
+     */
   </script>
 </form-tag>
