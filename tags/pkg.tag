@@ -7,7 +7,7 @@
   <div class="card-content">
     <p>{pkg.description}</p>
     <div class="tags">
-      <span each="{pkg.keywords}" class="tag is-light is-rounded">{word}</span>
+      <span each="{keywords}" class="tag is-light is-rounded">{word}</span>
     </div>
   </div>
 
@@ -47,7 +47,7 @@
 
   <script>
     this.pkg = this.opts.pkg
-    this.pkg.keywords = this.opts.pkg.keywords && this.opts.pkg.keywords.slice(0, 6).map((word) => ({ word }))
+    this.keywords = this.opts.pkg.keywords && this.opts.pkg.keywords.slice(0, 6).map((word) => ({ word }))
     toggleWhole(ev) {
       ev.preventDefault()
       const z = ev.target.closest('.column')
