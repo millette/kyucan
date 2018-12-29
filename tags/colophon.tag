@@ -1,5 +1,5 @@
 <colophon-tag>
-  <h3 id="colophon" class="title is-3">Colophon</h3>
+  <h3 class="title is-3">Colophon</h3>
   <h4 class="subtitle is-4">Dépendances</h4>
   <div class="columns is-multiline is-mobile">
     <div class="{colClasses}">
@@ -9,12 +9,6 @@
       <div class="card"><pkg-tag pkg="{this}" /></div>
     </div>
   </div>
-
-  <style>
-    h3 {
-      margin-top: 1em;
-    }
-  </style>
 
   <script>
     this.mixin("oy")
@@ -28,5 +22,7 @@
     const clean = (x) => ({ ...x, ...poo })
     this.kyucan = clean(this.self())
     this.pkgs = this.pkgs.map(clean)
+
+    this.mixin("routed")
   </script>
 </colophon-tag>
