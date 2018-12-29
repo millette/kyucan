@@ -49,6 +49,9 @@
     "content": [
       "*.html",
       "tags/*.tag"
+    ],
+    "whitelist": [
+      "is-active"
     ]
   }
 }
