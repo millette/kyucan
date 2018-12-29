@@ -136,7 +136,6 @@
   </form>
 
   <script>
-    // this.submit = this.opts.submit
     this.eventPrefs = this.opts.eventPrefs
     this.eventData = this.opts.eventData
     this.addDate = this.opts.addDate
@@ -209,11 +208,6 @@
       this.refs.name.classList.add('is-success')
       if (this.refs.email.value) this.refs.email.classList.add('is-success')
 
-      /*
-      this.name = this.refs.name.value
-      this.email = this.refs.email.value
-      */
-
       const dates = Array.isArray(this.refs.date) ? this.refs.date : [this.refs.date]
       const times = Array.isArray(this.refs.time) ? this.refs.time : [this.refs.time]
       this.datesGiven = [...parsePicks()]
@@ -223,14 +217,7 @@
       if (this.datesGiven.length) str += (this.datesGiven.length === 1) ? ` (un moment)` : ` (${this.datesGiven.length} moments)`
       document.title = str
       this.opts.setShow(true, this.datesGiven, this.refs.name.value, this.refs.email.value)
-      /*
-      this.show = true
-      this.update()
-      document.getElementById('choices').scrollIntoView({ behavior: 'smooth' })
-      */
     }
-
-    // deleteMessage() { this.opts.setShow(false) }
 
     timeChange(ev) {
       // chrome handles the step attribute correctly
@@ -243,7 +230,6 @@
         ev.target.value = `${h}:${nm}`
       }
     }
-
 
     addDate(e) {
       e.preventUpdate = true
@@ -263,7 +249,6 @@
       const time = Array.isArray(this.refs.time) ? this.refs.time.slice(-1)[0] : this.refs.time
       time.scrollIntoView({ behavior: 'smooth', block: 'nearest' })
     }
-
 
     collapse() {
       this.showDates = !this.showDates
