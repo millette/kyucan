@@ -1,6 +1,6 @@
 <preference-tag>
   <div class="field">
-    <div class="control" onclick="{clicky}" ref="{ref}">
+    <div class="control" onclick="{clicky}">
       <label class="radio has-text-success">
         <input type="radio" value="1" name="{rsvp}" checked /> Oui
       </label>
@@ -21,12 +21,11 @@
 
   <script>
     this.rsvp = `bobo-${this._riot_id}`
-    this.ref = this.opts.ref
     this.going = 1
 
     clicky(ev) {
       this.going = parseFloat(ev.target.value) || 0
-      if (!this.ref && (ev.target.type === 'radio')) this.opts.setPreference(ev, this.going)
+      if (this.opts.setPreference && (ev.target.type === 'radio')) this.opts.setPreference(ev, this.going)
     }
   </script>
 </preference-tag>

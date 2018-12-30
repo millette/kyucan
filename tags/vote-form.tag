@@ -77,7 +77,7 @@
             />
           </div>
         </div>
-        <preference-tag ref="preference" />
+        <preference-tag ref="{(`preference-${this.n}`)}" />
       </virtual>
       <div class="control">
         <button
@@ -146,23 +146,28 @@
         return o
       })
 
-    const parseDate = (times, date, i) => {
-      if (!date.value) return
+    const moreDates = () => {
+      const dates = Array.isArray(this.refs.date) ? this.refs.date : [this.refs.date]
+      const times = Array.isArray(this.refs.time) ? this.refs.time : [this.refs.time]
+      const prefs = dates.map((a, x) => this.refs[`preference-${x + 1}`].going)
+      const oy = dates
+        .map((date, i) => {
+          if (!date.value || !prefs[i]) return
+          const o = {
+            date: date.value,
+            preference: `${100 * prefs[i]}%`
+          }
+          if (times[i].value) {
+            o.time = times[i].value
+            o.utcTime = boop(o.date, o.time)
+          } else {
+            o.offset = offset
+          }
+          return o
+        })
+        .filter(Boolean)
 
-      const preferences = Array.isArray(this.refs.preference)
-        ? this.refs.preference.map((x) => x.going)
-        : [this.refs.preference.going]
-
-      const o = { date: date.value }
-
-      if (preferences[i]) o.preference = `${100 * preferences[i]}%`
-      if (times[i].value) {
-        o.time = times[i].value
-        o.utcTime = boop(o.date, o.time)
-      } else {
-        o.offset = offset
-      }
-      this.datesGiven.push(o)
+      this.datesGiven = [...parsePicks(), ...oy]
     }
 
     submit(e) {
@@ -172,11 +177,7 @@
       this.refs.email.classList.remove('is-danger')
       this.refs.name.classList.add('is-success')
       if (this.refs.email.value) this.refs.email.classList.add('is-success')
-
-      const dates = Array.isArray(this.refs.date) ? this.refs.date : [this.refs.date]
-      const times = Array.isArray(this.refs.time) ? this.refs.time : [this.refs.time]
-      this.datesGiven = [...parsePicks()]
-      dates.forEach(parseDate.bind(this, times))
+      moreDates()
 
       let str = `Kyucan - ${this.name}`
       if (this.datesGiven.length) str += (this.datesGiven.length === 1) ? ` (un moment)` : ` (${this.datesGiven.length} moments)`
