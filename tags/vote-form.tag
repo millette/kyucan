@@ -181,7 +181,7 @@
       if (this.refs.email.value) this.refs.email.classList.add('is-success')
       moreDates()
 
-      let str = `Kyucan - ${this.name}`
+      let str = `Kyucan - ${this.refs.name.value}`
       if (this.datesGiven.length) str += (this.datesGiven.length === 1) ? ` (un moment)` : ` (${this.datesGiven.length} moments)`
       document.title = str
       this.opts.setShow(true, this.datesGiven, this.refs.name.value, this.refs.email.value)
