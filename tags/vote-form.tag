@@ -58,6 +58,7 @@
               ref="date"
               class="input"
               type="date"
+              value="{lastDate}"
               min="{eventData.from}"
               max="{eventData.until}"
             />
@@ -71,13 +72,14 @@
               ref="time"
               class="input"
               type="time"
+              value="12:00"
               min="00:00"
               max="23:45"
               step="{eventData.step}"
             />
           </div>
         </div>
-        <preference-tag ref="{(`preference-${this.n}`)}" />
+        <preference-tag isno="{(n === 1)}" ref="{(`preference-${this.n}`)}" />
       </virtual>
       <div class="control">
         <button
@@ -202,9 +204,14 @@
       const dates = Array.isArray(this.refs.date) ? [...this.refs.date] : [this.refs.date]
       const date = dates.pop()
       if (date.value) {
+        const nextDay = new Date(Date.parse(date.value) + 86400000)
+        const year = nextDay.getUTCFullYear()
+        const month = `${nextDay.getUTCMonth() + 1}`.padStart(2, '0')
+        const d = `${nextDay.getUTCDate()}`.padStart(2, '0')
+        const lastDate = `${year}-${month}-${d}`
         this.dates.push({
           n: dates.length + 2,
-          lastDate: date.value
+          lastDate
         })
       }
       this.update()
@@ -216,10 +223,12 @@
       time.scrollIntoView({ behavior: 'smooth', block: 'nearest' })
     }
 
+    this.firstShow = true
     collapse() {
       this.showDates = !this.showDates
-      if (this.showDates && !this.refs.date.value) {
-        this.refs.date.value = this.refs.date.min
+      if (this.showDates && this.firstShow) {
+        this.firstShow = false
+        document.querySelector('fieldset.is-hidden .radio.has-text-success').click()
       }
     }
 
