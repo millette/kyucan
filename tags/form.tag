@@ -56,20 +56,6 @@
   </section>
 
   <style>
-    .woot,
-    .woot2 {
-      margin-bottom: 0.5rem;
-      padding: 0.25rem;
-    }
-
-    .woot:nth-child(odd) * {
-      background: #eef;
-    }
-
-    .woot:nth-child(even) * {
-      background: #fee;
-    }
-
     fieldset {
       overflow-y: scroll;
       max-height: 25rem;
@@ -78,15 +64,6 @@
     label.checkbox {
       color: black;
       display: block;
-    }
-
-    input[type="range"] {
-      margin-bottom: 1rem;
-    }
-
-    .collapser {
-      color: black;
-      margin-bottom: 1rem;
     }
 
     dt {
@@ -102,7 +79,7 @@
 
     setShow(show, datesGiven, name, email) {
       this.show = show
-      if (datesGiven) this.datesGiven = datesGiven
+      if (datesGiven) this.datesGiven = datesGiven.filter(({ preference }) => preference)
       if (name) this.name = name
       if (email) this.email = email
       this.update()
