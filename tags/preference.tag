@@ -2,13 +2,13 @@
   <div class="field">
     <div class="control" onclick="{clicky}" ref="{ref}">
       <label class="radio has-text-success">
-        <input type="radio" value="1" name="{rsvp}" checked /> Going
+        <input type="radio" value="1" name="{rsvp}" checked /> Oui
       </label>
       <label class="radio has-text-danger">
-        <input type="radio" name="{rsvp}" /> Not going
+        <input type="radio" name="{rsvp}" /> Non
       </label>
       <label class="radio has-text-info">
-        <input type="radio" value="0.5" name="{rsvp}" /> Maybe
+        <input type="radio" value="0.5" name="{rsvp}" /> Possiblement
       </label>
     </div>
   </div>
