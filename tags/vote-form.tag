@@ -31,16 +31,13 @@
     <fieldset>
       <legend>Mes choix</legend>
       <virtual each="{eventPrefs}">
-        <p>One...</p>
-        <div class="{picked ? 'woot' : 'woot2'}">
-          <label class="checkbox">
-            <input type="checkbox" onchange="{pickPref}" /> {local.replace('T',
-            ' à ')}
-          </label>
+        <label class="checkbox">
+          <input type="checkbox" onchange="{pickPref}" /> {local.replace('T', '
+          à ')}
+        </label>
 
-          <div if="{picked}">
-            <preference-tag set-preference="{setPreference}" pref="{pref}" />
-          </div>
+        <div if="{picked}">
+          <preference-tag set-preference="{setPreference}" />
         </div>
       </virtual>
     </fieldset>
@@ -54,35 +51,33 @@
         Ajouter des dates et des heures
       </legend>
       <virtual each="{dates}">
-        <div class="woot">
-          <div class="field">
-            <label class="label">Date #{n}</label>
-            <div class="control">
-              <input
-                ref="date"
-                class="input"
-                type="date"
-                min="{eventData.from}"
-                max="{eventData.until}"
-              />
-            </div>
+        <div class="field">
+          <label class="label">Date #{n}</label>
+          <div class="control">
+            <input
+              ref="date"
+              class="input"
+              type="date"
+              min="{eventData.from}"
+              max="{eventData.until}"
+            />
           </div>
-          <div class="field">
-            <label class="label">Heure</label>
-            <div class="control">
-              <input
-                onchange="{timeChange}"
-                ref="time"
-                class="input"
-                type="time"
-                min="00:00"
-                max="23:45"
-                step="{eventData.step}"
-              />
-            </div>
-          </div>
-          <preference-tag ref="preference" />
         </div>
+        <div class="field">
+          <label class="label">Heure</label>
+          <div class="control">
+            <input
+              onchange="{timeChange}"
+              ref="time"
+              class="input"
+              type="time"
+              min="00:00"
+              max="23:45"
+              step="{eventData.step}"
+            />
+          </div>
+        </div>
+        <preference-tag ref="preference" />
       </virtual>
       <div class="control">
         <button
@@ -100,6 +95,13 @@
       </button>
     </div>
   </form>
+
+  <style>
+    .collapser {
+      color: black;
+      margin-bottom: 1rem;
+    }
+  </style>
 
   <script>
     this.eventPrefs = this.opts.eventPrefs
@@ -131,10 +133,10 @@
       .filter(({ picked }) => picked)
       .map(({ local, pref }) => {
         const [date, time] = local.split('T')
-        const o = {
-          date,
-          preference: `${100 * pref}%`
-        }
+        const o = { date }
+
+        if (pref) o.preference = `${100 * pref}%`
+
         if (time) {
           o.time = time
           o.utcTime = boop(o.date, o.time)
@@ -148,14 +150,12 @@
       if (!date.value) return
 
       const preferences = Array.isArray(this.refs.preference)
-        ? this.refs.preference.map((x) => x.refs.preference.valueAsNumber)
-        : [this.refs.preference.refs.preference.valueAsNumber]
+        ? this.refs.preference.map((x) => x.going)
+        : [this.refs.preference.going]
 
-      const o = {
-        date: date.value,
-        preference: `${100 * preferences[i]}%`
-      }
+      const o = { date: date.value }
 
+      if (preferences[i]) o.preference = `${100 * preferences[i]}%`
       if (times[i].value) {
         o.time = times[i].value
         o.utcTime = boop(o.date, o.time)
@@ -164,7 +164,6 @@
       }
       this.datesGiven.push(o)
     }
-
 
     submit(e) {
       e.preventDefault()
@@ -234,8 +233,8 @@
       }
     }
 
-    setPreference(ev) {
-      ev.item.pref = ev.target.value
+    setPreference(ev, g) {
+      ev.item.pref = g
     }
 
     pickPref(ev) {
@@ -248,6 +247,6 @@
         e.target.classList.add('is-danger')
     }
 
-    // this.on('mount', () => this.refs.name.focus())
+    this.on('mount', () => this.refs.name.focus())
   </script>
 </vote-form>
