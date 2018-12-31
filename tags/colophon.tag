@@ -22,7 +22,5 @@
     const clean = (x) => ({ ...x, ...poo })
     this.kyucan = clean(this.self())
     this.pkgs = this.pkgs.map(clean)
-
-    this.mixin("routed")
   </script>
 </colophon-tag>
