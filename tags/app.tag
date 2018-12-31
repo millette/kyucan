@@ -8,5 +8,9 @@
       </section>
     </route>
   </router>
-  <footer-tag><p>Ligne numéro deux</p></footer-tag>
+  <footer-tag commithash="{commithash}"><p>Ligne numéro deux</p></footer-tag>
+
+  <script>
+    this.commithash = this.opts.commithash
+  </script>
 </app>
