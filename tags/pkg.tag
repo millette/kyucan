@@ -12,13 +12,8 @@
   </div>
 
   <footer class="card-footer">
-    <a
-      class="card-footer-item"
-      if="{pkg.homepage}"
-      target="_blank"
-      rel="noopener noreferrer"
-      href="{pkg.homepage}"
-      >Site web</a
+    <out-link class="card-footer-item" href="{pkg.homepage}" if="{pkg.homepage}"
+      >Site web</out-link
     >
     <p
       class="card-footer-item has-pointer"
