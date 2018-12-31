@@ -37,11 +37,12 @@
     "node-sass": "^4.11.0",
     "parcel-bundler": "^1.11.0",
     "parcel-plugin-purgecss": "^2.1.0",
+    "parcel-plugin-txt": "^1.0.3",
     "parcel-plugin-tag": "^1.1.0",
     "prettier": "^1.15.3"
   },
   "scripts": {
-    "build": "parcel build --no-source-maps --detailed-report --experimental-scope-hoisting index.html",
+    "build": "cp .git/refs/heads/master more/git-master-head.txt && parcel build --no-source-maps --detailed-report --experimental-scope-hoisting index.html",
     "clean": "rm -fr .cache dist",
     "start": "CHOKIDAR_USEPOLLING=yes parcel index.html # workaround https://github.com/parcel-bundler/parcel/issues/1743#issuecomment-441278085"
   },
