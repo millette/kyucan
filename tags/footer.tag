@@ -3,9 +3,12 @@
     <div class="container has-text-centered">
       <p class="has-text-success">
         Je suis le footer, hear me roar!
-        <a href="https://github.com/millette/kyucan/tree/{commithash}"
-          >sources</a
+        <out-link
+          class="has-background-white"
+          href="https://github.com/millette/kyucan/tree/{commithash}"
         >
+          sources - hash #{parent.commithash}
+        </out-link>
       </p>
       <yield />
     </div>
