@@ -9,9 +9,7 @@
 
   <script>
     this.on('mount', () => {
-      const x = document.querySelectorAll(
-        ".menu.is-pulled-right > .menu-list > li > a",
-      )
+      const x = this.root.querySelectorAll(".menu-list > li > a")
       switch (window.location.hash) {
         case '':
         case '#':
@@ -29,7 +27,8 @@
     })
 
     click(ev) {
-      document.querySelector(".menu.is-pulled-right > .menu-list > li > a.is-active").classList.remove("is-active")
+      this.root.querySelector(".menu-list > li > a.is-active")
+        .classList.remove("is-active")
       ev.target.classList.add("is-active")
     }
   </script>
