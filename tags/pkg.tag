@@ -30,11 +30,7 @@
       whitespace: pre-wrap;
       font-weight: normal;
     }
-    .card-header-title,
-    .card-footer-item,
-    .card-content {
-      color: black;
-    }
+
     .tags {
       margin-top: 1rem;
     }

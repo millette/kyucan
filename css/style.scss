@@ -1,5 +1,5 @@
 // first
-@import "sass/utilities/initial-variables.sass";
+@import "sass/utilities/_all.sass";
 
 $body-background-color: #000;
 $background: $grey-darker;
@@ -10,6 +10,27 @@ $subtitle-strong-color: $white-ter;
 $text: $white;
 $text-light: lighten($text, 10);
 $text-strong: darken($text, 5);
+
+// Link colors
+
+$link: $info;
+$link-invert: $black;
+$link-visited: $link;
+$link-hover: $warning;
+
+$menu-item-color: $black;
+$menu-item-active-background-color: $info;
+
+$card-color: $black;
+$card-header-color: $black;
+
+.card-footer-item > a {
+  color: $black;
+}
+
+.card-footer-item > a:hover {
+  color: $info;
+}
 
 // last
 @import "bulma.sass";

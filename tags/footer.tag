@@ -4,22 +4,12 @@
       <p class="has-text-success">
         Je suis le footer, hear me roar!
         <out-link href="https://github.com/millette/kyucan/tree/{commithash}">
-          <span class="link">sources - hash #{parent.commithash}</span>
+          sources - hash #{parent.commithash}
         </out-link>
       </p>
       <yield />
     </div>
   </section>
-
-  <style>
-    .link {
-      color: white !important;
-    }
-
-    .link:hover {
-      color: yellow !important;
-    }
-  </style>
 
   <script>
     this.commithash = this.opts.commithash
