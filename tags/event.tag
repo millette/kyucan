@@ -12,6 +12,9 @@
       <dt>Lieu</dt>
       <dd>{eventData.location}</dd>
 
+      <dt>Site web</dt>
+      <dd><a href="{eventData.url}">{eventData.url}</a></dd>
+
       <dt>Entre</dt>
       <dd>{eventData.from}</dd>
       <dd>{eventData.until}</dd>

@@ -3,6 +3,7 @@
   "description": "Description de l'événement...",
   "instigator": "Robin",
   "location": "Montréal...",
+  "url": "http://example.com/",
   "duration": 90,
   "step": 600,
   "from": "2019-01-10",
