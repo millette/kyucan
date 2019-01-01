@@ -1,56 +1,58 @@
 <form-tag>
-  <section class="section container">
-    <div class="columns">
-      <div class="column">
-        <event-tag event="{eventData}" />
-        <instructions-tag />
-      </div>
+  <section class="section">
+    <div class="container">
+      <div class="columns">
+        <div class="column">
+          <event-tag event="{eventData}" />
+          <instructions-tag />
+        </div>
 
-      <div class="column is-narrow">
-        <vote-form
-          submit="{submit}"
-          event-prefs="{eventPrefs}"
-          event-data="{eventData}"
-          add-date="{addDate}"
-          set-show="{setShow}"
-        />
-      </div>
-      <div if="{show}" class="column">
-        <article class="message is-primary">
-          <div class="message-header">
-            <h3 id="choices">Mes choix</h3>
-            <button
-              onclick="{deleteMessage}"
-              class="delete"
-              aria-label="delete"
-            ></button>
-          </div>
-          <div class="message-body content">
-            <dl>
-              <dt>Nom</dt>
-              <dd>{name}</dd>
-            </dl>
-            <virtual if="{email}">
+        <div class="column is-narrow">
+          <vote-form
+            submit="{submit}"
+            event-prefs="{eventPrefs}"
+            event-data="{eventData}"
+            add-date="{addDate}"
+            set-show="{setShow}"
+          />
+        </div>
+        <div if="{show}" class="column">
+          <article class="message is-primary">
+            <div class="message-header">
+              <h3 id="choices">Mes choix</h3>
+              <button
+                onclick="{deleteMessage}"
+                class="delete"
+                aria-label="delete"
+              ></button>
+            </div>
+            <div class="message-body content">
               <dl>
-                <dt>Email</dt>
-                <dd>{email}</dd>
+                <dt>Nom</dt>
+                <dd>{name}</dd>
               </dl>
-            </virtual>
-            <virtual each="{datesGiven}">
-              <dl>
-                <dt>Quand</dt>
-                <dd>
-                  {date} <span if="{time}"> à {time} (heure locale)</span>
-                  <span if="{offset}"> ({offset})</span>
-                </dd>
-                <dd if="{utcTime}"><small>{utcTime}</small></dd>
+              <virtual if="{email}">
+                <dl>
+                  <dt>Email</dt>
+                  <dd>{email}</dd>
+                </dl>
+              </virtual>
+              <virtual each="{datesGiven}">
+                <dl>
+                  <dt>Quand</dt>
+                  <dd>
+                    {date} <span if="{time}"> à {time} (heure locale)</span>
+                    <span if="{offset}"> ({offset})</span>
+                  </dd>
+                  <dd if="{utcTime}"><small>{utcTime}</small></dd>
 
-                <dt>Préférence</dt>
-                <dd>{preference}</dd>
-              </dl>
-            </virtual>
-          </div>
-        </article>
+                  <dt>Préférence</dt>
+                  <dd>{preference}</dd>
+                </dl>
+              </virtual>
+            </div>
+          </article>
+        </div>
       </div>
     </div>
   </section>
