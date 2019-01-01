@@ -1,7 +1,8 @@
 <app>
   <hero-tag />
   <router>
-    <route path="/"><form-tag top="3"/></route>
+    <route path="/"><home-tag /></route>
+    <route path="vote"><form-tag top="3"/></route>
     <route path="evenement"><event-form /></route>
     <route path="colophon">
       <section class="section container">

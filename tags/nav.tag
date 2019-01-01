@@ -3,6 +3,7 @@
     <ul class="menu-list" onclick="{click}">
       <li><a href="#">Accueil</a></li>
       <li><a href="#evenement">Événement</a></li>
+      <li><a href="#vote">Voter</a></li>
       <li><a href="#colophon">Colophon</a></li>
     </ul>
   </aside>
@@ -20,8 +21,12 @@
           x[1].classList.add("is-active")
           break
 
-        case '#colophon':
+        case '#vote':
           x[2].classList.add("is-active")
+          break
+
+        case '#colophon':
+          x[3].classList.add("is-active")
           break
       }
     })
