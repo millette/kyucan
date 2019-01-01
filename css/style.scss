@@ -1,7 +1,7 @@
 // first
 @import "sass/utilities/_all.sass";
 
-$body-background-color: #000;
+$body-background-color: $black;
 $background: $grey-darker;
 $footer-background-color: $background;
 $title-color: $white;
@@ -14,7 +14,7 @@ $text-strong: darken($text, 5);
 // Link colors
 
 $link: $info;
-$link-invert: $black;
+$link-invert: $body-background-color;
 $link-visited: $link;
 $link-hover: $warning;
 
@@ -26,11 +26,11 @@ $link-hover: $warning;
   padding: 0;
 }
 
-$card-color: $black;
-$card-header-color: $black;
+$card-color: $body-background-color;
+$card-header-color: $card-color;
 
 .card-footer-item > a {
-  color: $black;
+  color: $body-background-color;
 }
 
 .card-footer-item > a:hover {
@@ -51,4 +51,8 @@ fieldset {
 
 .has-pointer {
   cursor: pointer;
+}
+
+code {
+  background: $background;
 }
