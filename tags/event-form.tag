@@ -5,5 +5,6 @@
   </section>
   <script>
     this.mixin("event")
+    this.mixin("routed")
   </script>
 </event-form>

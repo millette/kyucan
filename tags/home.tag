@@ -10,4 +10,8 @@
       </ul>
     </div>
   </section>
+
+  <script>
+    this.mixin("routed")
+  </script>
 </home-tag>

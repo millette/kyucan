@@ -12,6 +12,7 @@
 
   <script>
     this.mixin("oy")
+    this.mixin("routed")
     this.pkgs = this.getPkgs()
     this.colClasses =
       "column is-full-mobile is-half-tablet is-one-third-desktop is-one-quarter-fullhd"

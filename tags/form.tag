@@ -73,6 +73,7 @@
 
   <script>
     this.mixin("event")
+    this.mixin("routed")
     this.show = false
     this.datesGiven = []
 
