@@ -5,8 +5,8 @@
       <p>L'horaire simplifié.</p>
       <ul>
         <li><a href="#evenement">Créer un événement</a></li>
-        <li>Voter</li>
-        <li>Planifier</li>
+        <li><a href="#vote">Voter</a></li>
+        <li><a href="#planifier">Planifier</a></li>
       </ul>
     </div>
   </section>
