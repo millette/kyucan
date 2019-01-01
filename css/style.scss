@@ -18,8 +18,13 @@ $link-invert: $black;
 $link-visited: $link;
 $link-hover: $warning;
 
-$menu-item-color: $black;
-$menu-item-active-background-color: $info;
+#mainnav a.navbar-item.is-active {
+  background: $primary;
+}
+
+#mainnav .navbar-menu {
+  padding: 0;
+}
 
 $card-color: $black;
 $card-header-color: $black;
