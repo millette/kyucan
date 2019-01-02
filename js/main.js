@@ -9,8 +9,10 @@ import commithash from "../more/git-master-head.txt"
 import oy from "./oy.js"
 import event from "./event.js"
 import routed from "./routed.js"
+import localDate from "./local-date.js"
 
 riot.mixin("oy", oy)
 riot.mixin("event", event)
 riot.mixin("routed", routed)
+riot.mixin("localDate", localDate)
 riot.mount("app", { commithash })
