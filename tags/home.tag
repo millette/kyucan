@@ -1,4 +1,5 @@
 <home-tag>
+  <hero-tag />
   <section class="section container">
     <h3 class="title is-3">Accueil</h3>
     <div class="content">

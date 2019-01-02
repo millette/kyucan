@@ -1,5 +1,5 @@
 <app>
-  <hero-tag />
+  <nav-tag />
   <router>
     <route path="/"><home-tag navid="0"/></route>
     <route path="colophon">
