@@ -13,6 +13,7 @@
               <div class="control">
                 <input
                   class="input"
+                  ref="title"
                   type="text"
                   placeholder="Titre de l'événement"
                 />
@@ -24,6 +25,7 @@
               <div class="control">
                 <input
                   class="input"
+                  ref="instigator"
                   type="text"
                   placeholder="Personne ou organisme responsable"
                 />
@@ -32,7 +34,9 @@
 
             <div class="field">
               <label class="label">Description</label>
-              <div class="control"><textarea class="textarea"></textarea></div>
+              <div class="control">
+                <textarea ref="description" class="textarea"></textarea>
+              </div>
             </div>
 
             <div class="field">
@@ -40,6 +44,7 @@
               <div class="control">
                 <input
                   class="input"
+                  ref="website"
                   type="url"
                   placeholder="https://example.com/"
                 />
@@ -54,6 +59,7 @@
                     <input
                       onchange="{timeChange}"
                       class="input"
+                      ref="duration"
                       type="time"
                       value="01:00"
                       min="00:15"
@@ -66,14 +72,29 @@
 
               <div class="column">
                 <div class="field">
-                  <label class="label">Première date</label>
-                  <div class="control"><input class="input" type="date" /></div>
+                  <label class="label">Premier jour</label>
+                  <div class="control">
+                    <input
+                      ref="firstday"
+                      min="{today}"
+                      value="{today}"
+                      class="input"
+                      type="date"
+                    />
+                  </div>
                 </div>
               </div>
               <div class="column">
                 <div class="field">
-                  <label class="label">Dernière date</label>
-                  <div class="control"><input class="input" type="date" /></div>
+                  <label class="label">Dernier jour</label>
+                  <div class="control">
+                    <input
+                      min="{today}"
+                      ref="lastday"
+                      class="input"
+                      type="date"
+                    />
+                  </div>
                 </div>
               </div>
             </div>
@@ -90,7 +111,9 @@
   </section>
   <script>
     // this.mixin("event")
+    this.mixin('localDate')
     this.mixin("routed")
+    this.today = this.localDate()
 
     timeChange(ev) {
       // chrome handles the step attribute correctly
@@ -106,6 +129,19 @@
 
     submit(ev) {
       ev.preventDefault()
+
+      const vals = { offset: this.offset }
+      let r
+      for (r in this.refs) {
+        vals[r] = this.refs[r].value
+      }
+      if (vals.firstday && vals.lastday && (vals.firstday > vals.lastday)) {
+        const tmp = vals.lastday
+        vals.lastday = vals.firstday
+        vals.firstday = tmp
+      }
+
+      console.log(vals)
     }
   </script>
 </event-form>

@@ -106,6 +106,7 @@
   </style>
 
   <script>
+    this.mixin('localDate')
     this.eventPrefs = this.opts.eventPrefs
     this.eventData = this.opts.eventData
     this.addDate = this.opts.addDate
@@ -119,15 +120,6 @@
         lastDate: this.eventData.from
       }
     ]
-
-    const makeOffset = () => {
-      const xx0 = 100 * new Date().getTimezoneOffset() / 60
-      const xx = `${xx0}`.padStart(4, '0')
-      const s = xx0 < 0 ? '+' : '-'
-      return `UTC${s}${xx}`
-    }
-
-    const offset = makeOffset()
 
     const boop = (d, t) => new Date(`${d}T${t}`).toISOString().split('.')[0] + ' UTC'
 
@@ -143,7 +135,7 @@
           o.time = time
           o.utcTime = boop(o.date, o.time)
         } else {
-          o.offset = offset
+          o.offset = this.offset
         }
         return o
       })
@@ -163,7 +155,7 @@
             o.time = times[i].value
             o.utcTime = boop(o.date, o.time)
           } else {
-            o.offset = offset
+            o.offset = this.offset
           }
           return o
         })
@@ -204,14 +196,9 @@
       const dates = Array.isArray(this.refs.date) ? [...this.refs.date] : [this.refs.date]
       const date = dates.pop()
       if (date.value) {
-        const nextDay = new Date(Date.parse(date.value) + 86400000)
-        const year = nextDay.getUTCFullYear()
-        const month = `${nextDay.getUTCMonth() + 1}`.padStart(2, '0')
-        const d = `${nextDay.getUTCDate()}`.padStart(2, '0')
-        const lastDate = `${year}-${month}-${d}`
         this.dates.push({
           n: dates.length + 2,
-          lastDate
+          lastDate: this.localDate(new Date(Date.parse(date.value) + 86400000))
         })
       }
       this.update()
