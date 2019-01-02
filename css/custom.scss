@@ -1,0 +1,32 @@
+#mainnav a.navbar-item.is-active {
+  background: $primary;
+}
+
+#mainnav .navbar-menu {
+  padding: 0;
+}
+
+.card-footer-item > a {
+  color: $body-background-color;
+}
+
+.card-footer-item > a:hover {
+  color: $info;
+}
+
+fieldset > legend {
+  color: $body-background-color;
+}
+
+fieldset {
+  padding: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.has-pointer {
+  cursor: pointer;
+}
+
+code {
+  background: $background;
+}
