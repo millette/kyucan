@@ -3,21 +3,23 @@
   <div class="content">
     <p>{eventData.description}</p>
     <dl>
-      <dt>Instigateur</dt>
-      <dd>{eventData.instigator}</dd>
+      <dt if="{eventData.instigator}">Instigateur</dt>
+      <dd if="{eventData.instigator}">{eventData.instigator}</dd>
 
-      <dt>Durée</dt>
-      <dd>{eventData.duration / 60}h</dd>
+      <dt if="{eventData.duration}">Durée</dt>
+      <dd if="{eventData.duration}">{eventData.duration / 60}h</dd>
 
-      <dt>Lieu</dt>
-      <dd>{eventData.location}</dd>
+      <dt if="{eventData.location}">Lieu</dt>
+      <dd if="{eventData.location}">{eventData.location}</dd>
 
-      <dt>Site web</dt>
-      <dd><a href="{eventData.url}">{eventData.url}</a></dd>
+      <dt if="{eventData.url}">Site web</dt>
+      <dd if="{eventData.url}">
+        <a href="{eventData.url}">{eventData.url}</a>
+      </dd>
 
-      <dt>Entre</dt>
-      <dd>{eventData.from}</dd>
-      <dd>{eventData.until}</dd>
+      <dt if="{(eventData.from && eventData.until)}">Entre</dt>
+      <dd if="{eventData.from}">{eventData.from}</dd>
+      <dd if="{eventData.until}">{eventData.until}</dd>
     </dl>
   </div>
 
@@ -28,6 +30,6 @@
   </style>
 
   <script>
-    this.eventData = this.opts.event
+    this.eventData = this.opts.event || {}
   </script>
 </event-tag>
