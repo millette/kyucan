@@ -87,6 +87,7 @@
                   <label class="label">Premier jour</label>
                   <div class="control">
                     <input
+                      required
                       ref="from"
                       min="{today}"
                       value="{today}"
@@ -101,6 +102,7 @@
                   <label class="label">Dernier jour</label>
                   <div class="control">
                     <input
+                      required
                       min="{today}"
                       ref="until"
                       class="input"
@@ -141,6 +143,7 @@
     }
 
     this.initVal = {
+      creating: true,
       offset: this.offset,
       _id: this.uniqueId()
     }
