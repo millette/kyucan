@@ -20,6 +20,7 @@
       <dt if="{(eventData.from && eventData.until)}">Entre</dt>
       <dd if="{eventData.from}">{eventData.from}</dd>
       <dd if="{eventData.until}">{eventData.until}</dd>
+      <dd if="{eventData.offset}">{eventData.offset}</dd>
     </dl>
   </div>
 
