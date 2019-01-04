@@ -6,7 +6,7 @@
         <input
           ref="name"
           required
-          class="input is-danger"
+          class="{(`input${this.eventData.instigator ? '' : ' is-danger'}`)}"
           type="text"
           value="{eventData.instigator}"
           placeholder="Nom complet, prénom ou alias"
@@ -83,7 +83,10 @@
             />
           </div>
         </div>
-        <preference-tag isno="{(n === 1)}" ref="{(`preference-${this.n}`)}" />
+        <preference-tag
+          isno="{(!eventData.creating && (n === 1))}"
+          ref="{(`preference-${this.n}`)}"
+        />
       </virtual>
       <div class="control">
         <button
@@ -248,6 +251,6 @@
         e.target.classList.add('is-danger')
     }
 
-    this.on('mount', () => this.refs.name.focus())
+    if (!this.eventData.instigator) this.on('mount', () => this.refs.name.focus())
   </script>
 </vote-form>
