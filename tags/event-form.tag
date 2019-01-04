@@ -33,6 +33,18 @@
             </div>
 
             <div class="field">
+              <label class="label">Lieu</label>
+              <div class="control">
+                <input
+                  class="input"
+                  ref="location"
+                  type="text"
+                  placeholder="Montréal..."
+                />
+              </div>
+            </div>
+
+            <div class="field">
               <label class="label">Description</label>
               <div class="control">
                 <textarea ref="description" class="textarea"></textarea>
@@ -44,7 +56,7 @@
               <div class="control">
                 <input
                   class="input"
-                  ref="website"
+                  ref="url"
                   type="url"
                   placeholder="https://example.com/"
                 />
@@ -75,7 +87,7 @@
                   <label class="label">Premier jour</label>
                   <div class="control">
                     <input
-                      ref="firstday"
+                      ref="from"
                       min="{today}"
                       value="{today}"
                       class="input"
@@ -90,7 +102,7 @@
                   <div class="control">
                     <input
                       min="{today}"
-                      ref="lastday"
+                      ref="until"
                       class="input"
                       type="date"
                     />
@@ -110,9 +122,10 @@
     </div>
   </section>
   <script>
-    // this.mixin("event")
+    this.mixin("store")
     this.mixin('localDate')
     this.mixin("routed")
+    this.mixin("uniqueId")
     this.today = this.localDate()
 
     timeChange(ev) {
@@ -127,21 +140,37 @@
       }
     }
 
+    this.initVal = {
+      offset: this.offset,
+      _id: this.uniqueId()
+    }
+
     submit(ev) {
       ev.preventDefault()
 
-      const vals = { offset: this.offset }
+      const vals = { ...this.initVal }
       let r
+
       for (r in this.refs) {
         vals[r] = this.refs[r].value
       }
-      if (vals.firstday && vals.lastday && (vals.firstday > vals.lastday)) {
-        const tmp = vals.lastday
-        vals.lastday = vals.firstday
-        vals.firstday = tmp
+
+      if (vals.from && vals.until && (vals.from > vals.until)) {
+        const tmp = vals.until
+        vals.until = vals.from
+        vals.from = tmp
       }
 
-      console.log(vals)
+      if (vals.duration) {
+        const [a, b] = vals.duration.split(':')
+        vals.duration = parseInt(a, 10) * 60 + parseInt(b, 10)
+      }
+
+      if (!vals.step) vals.step = 900
+
+      this.storeSet('event', vals)
+      window.location.hash = `#vote/${vals._id}`
     }
+    this.on('mount', () => this.refs.title.focus())
   </script>
 </event-form>
