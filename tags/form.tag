@@ -74,10 +74,19 @@
   </style>
 
   <script>
+    this.mixin("store")
     this.mixin("event")
     this.mixin("routed")
     this.show = false
     this.datesGiven = []
+
+    // console.log('FOR-STORE:', this.storeGet('event'))
+    this.eventData = this.storeGet('event')
+
+    this.on('route', (name, b, c) => {
+      // this.name = name
+      console.log('ROUTE', name, b, c, this.opts)
+    })
 
     setShow(show, datesGiven, name, email) {
       this.show = show
