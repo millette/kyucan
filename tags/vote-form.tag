@@ -8,6 +8,7 @@
           required
           class="input is-danger"
           type="text"
+          value="{eventData.instigator}"
           placeholder="Nom complet, prénom ou alias"
           oninvalid="{invalid}"
           onchange="{ok}"
@@ -28,7 +29,7 @@
       </div>
     </div>
 
-    <fieldset>
+    <fieldset if="{eventPrefs}">
       <legend>Mes choix</legend>
       <virtual each="{eventPrefs}">
         <label class="checkbox">
@@ -47,7 +48,10 @@
     </p>
 
     <fieldset class="{showDates ? '' : 'is-hidden'}">
-      <legend onclick="{collapse}" class="has-pointer">
+      <legend
+        onclick="{eventData.creating || collapse}"
+        class="{eventData.creating || 'has-pointer'}"
+      >
         Ajouter des dates et des heures
       </legend>
       <virtual each="{dates}">
@@ -107,11 +111,11 @@
 
   <script>
     this.mixin('localDate')
-    this.eventPrefs = this.opts.eventPrefs
     this.eventData = this.opts.eventData
     this.addDate = this.opts.addDate
 
-    this.showDates = false
+    this.showDates = this.eventData.creating
+    if (!this.showDates) this.eventPrefs = this.opts.eventPrefs
     this.datesGiven = []
 
     this.dates = [
@@ -210,7 +214,7 @@
       time.scrollIntoView({ behavior: 'smooth', block: 'nearest' })
     }
 
-    this.firstShow = true
+    this.firstShow = !this.showDates
     collapse() {
       this.showDates = !this.showDates
       if (this.showDates && this.firstShow) {
