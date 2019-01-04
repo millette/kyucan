@@ -2,7 +2,6 @@
 
 // TODO: use dynamic import for code splitting
 //       might require bublé
-import eventData from "../event-data.json"
 import eventVotes from "../votes.json"
 
 const dates = eventVotes
@@ -49,7 +48,6 @@ const prefs = (opts) => {
 
 module.exports = {
   init: function(opts) {
-    this.eventData = eventData
     this.eventVotes = eventVotes
     this.eventDates = dates
     this.eventPrefs = prefs(opts)
