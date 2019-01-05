@@ -11,6 +11,7 @@
 git clone https://github.com/millette/kyucan.git
 cd kyucan
 npm install
+cp config.json.sample config.json # edit config.json
 npm start # mode dev, CTRL-C pour quitter
 npm run build # générer la version de production dans dist/
 ```
@@ -23,7 +24,7 @@ https://github.com/millette/kyucan/blob/master/index.html
 Le style lui-même est dérivé de bulma:
 https://github.com/millette/kyucan/blob/master/css/style.scss
 
-Le fichier JS principal est tout petit, il charge riot et les tags que j'ai écrit pour mon application. Remarque le les imports des tags n'assignent pas de noms, mais rend les tags disponibles (merci Parcel):
+Le fichier JS principal est tout petit, il charge riot et les tags que j'ai écrit pour mon application. Remarque que les imports des tags n'assignent pas de noms, mais rend les tags disponibles (merci Parcel):
 https://github.com/millette/kyucan/blob/master/js/main.js
 
 Enfin les tags sont ici:
@@ -47,4 +48,4 @@ https://github.com/millette/kyucan/blob/master/tags/form.tag
 
 ## License
 
-AGPL-v3 © 2018 [Robin Millette](http://robin.millette.info)
+AGPL-v3 © 2018-2019 [Robin Millette](http://robin.millette.info)

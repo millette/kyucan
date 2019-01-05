@@ -1,0 +1,9 @@
+{
+  "#COMMENT": [
+    "See https://www.jsonstore.io/ to obtain an endpoint (token)",
+    "or https://www.jsonstore.io/get-token",
+    "Replace [ENDPOINT] below with a proper token",
+    "Then copy to config.json"
+  ],
+  "db": "https://www.jsonstore.io/[ENDPOINT]"
+}
