@@ -11,10 +11,26 @@ const makeId = (len) =>
 
 const get = (u) =>
   fetch(u, { headers: { accept: "application/json" } }).then((res) =>
-    res.json(),
+    res.json()
   )
 
 module.exports = {
+  uniqueId: function uniqueId(id) {
+    const noId = !id
+    if (noId) id = makeId(8)
+    const w = db.slice(0, -id.length) + id
+    if (!noId) {
+      this.dbUrl = w
+      return id
+    }
+    return get(w).then((so) => {
+      if (so.result !== null) return uniqueId()
+      this.dbUrl = w
+      return id
+    })
+  },
+
+  /*
   uniqueId: function uniqueId(id2) {
     if (id2) {
       this.dbUrl = db.slice(0, -id2.length) + id2
@@ -28,6 +44,8 @@ module.exports = {
       return id
     })
   },
+  */
+
   dbPost: function(type, data, id) {
     if (!this.dbUrl) throw new Error("Call uniqueId() first")
     return fetch([this.dbUrl, type, id || data._id].join("/"), {
