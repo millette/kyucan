@@ -99,9 +99,7 @@
       </div>
     </fieldset>
     <div class="control">
-      <button class="content button is-primary is-fullwidth">
-        2<sup>e</sup>&nbsp;étape →
-      </button>
+      <button class="content button is-primary is-fullwidth">Vérifier →</button>
     </div>
   </form>
 
@@ -130,6 +128,7 @@
 
     const boop = (d, t) => new Date(`${d}T${t}`).toISOString().split('.')[0] + ' UTC'
 
+    // const parsePicks = () => this.eventPrefs ? this.eventPrefs
     const parsePicks = () => this.eventPrefs
       .filter(({ picked }) => picked)
       .map(({ local, pref }) => {
@@ -146,6 +145,7 @@
         }
         return o
       })
+      // : []
 
     const moreDates = () => {
       const dates = Array.isArray(this.refs.date) ? this.refs.date : [this.refs.date]
@@ -168,7 +168,7 @@
         })
         .filter(Boolean)
 
-      this.datesGiven = [...parsePicks(), ...oy]
+      this.datesGiven = this.eventPrefs ? [...parsePicks(), ...oy] : oy
     }
 
     submit(e) {
