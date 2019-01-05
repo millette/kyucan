@@ -127,7 +127,8 @@
     this.mixin("store")
     this.mixin('localDate')
     this.mixin("routed")
-    this.mixin("uniqueId")
+    this.mixin("db")
+    // this.mixin("uniqueId")
     this.today = this.localDate()
 
     timeChange(ev) {
@@ -142,16 +143,30 @@
       }
     }
 
+    this.uniqueId()
+      .then((_id) => {
+        console.log('SET INITVAL')
+        this.initVal = {
+          creating: true,
+          offset: this.offset,
+          _id
+        }
+      })
+      .catch((e) => console.error('UNIQ ERR', e))
+
+    /*
     this.initVal = {
       creating: true,
       offset: this.offset,
       _id: this.uniqueId()
     }
+    */
 
     submit(ev) {
       ev.preventDefault()
 
       const vals = { ...this.initVal }
+      console.log('VALS1:', vals)
       let r
 
       for (r in this.refs) {
@@ -170,6 +185,7 @@
       }
 
       if (!vals.step) vals.step = 900
+      console.log('VALS2:', vals)
 
       this.storeSet('event', vals)
       // this.storeSet('db', 'https://www.jsonstore.io/675197fb759f7a065fbc0ab3fde23af0c2022f3a1bf9ccf6963ccb43b90d3031')
