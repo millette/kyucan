@@ -17,7 +17,7 @@
           />
         </div>
         <div if="{show}" class="column">
-          <article class="message is-primary">
+          <article class="message is-warning">
             <div class="message-header">
               <h3 id="choices">Mes choix</h3>
               <button
@@ -50,6 +50,14 @@
                   <dd>{preference}</dd>
                 </dl>
               </virtual>
+
+              <button
+                onclick="{confirm}"
+                type="button"
+                class="button is-success is-fullwidth"
+              >
+                Confirmer
+              </button>
             </div>
           </article>
         </div>
@@ -74,6 +82,8 @@
   </style>
 
   <script>
+    this.mixin("db")
+    this.mixin("uniqueId")
     this.mixin("store")
     this.mixin("event")
     this.mixin("routed")
@@ -82,11 +92,47 @@
 
     // console.log('FOR-STORE:', this.storeGet('event'))
     this.eventData = this.storeGet('event')
+    // console.log('EL-DB:', this.storeGet('db'))
 
     this.on('route', (name, b, c) => {
       // this.name = name
       console.log('ROUTE', name, b, c, this.opts)
     })
+
+    confirm(ev) {
+      // const db = this.storeGet('db')
+      console.log('CONFIRM')
+      const event = {
+        ...this.eventData,
+        initialDates: this.datesGiven
+      }
+      delete event.creating
+      console.log('FULL-EVENT:', event)
+
+      const vote = {
+        _id: this.uniqueId(),
+        name: this.name,
+        email: this.email,
+        initialDates: this.datesGiven,
+        eventId: this.eventData._id
+      }
+      console.log('FULL-VOTE:', vote)
+
+      Promise.all([
+        this.dbPost('event', event),
+        this.dbPost('vote', vote, `${event._id}--${vote._id}`)
+      ])
+        .then((zz) => {
+          if (!zz || !zz.length || (zz.filter(({ ok }) => ok).length !== zz.length))
+            throw new Error('bad bad')
+
+          // We're good!
+        })
+        .catch((e) => {
+          console.error(e)
+          // We're not good!
+        })
+    }
 
     setShow(show, datesGiven, name, email) {
       this.show = show
