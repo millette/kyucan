@@ -111,8 +111,15 @@
   </style>
 
   <script>
+    console.log('Render vote-form')
     this.mixin('localDate')
-    this.eventData = this.opts.eventData
+    if (this.opts.eventData) {
+      this.eventData = this.opts.eventData
+    } else {
+      // throw new Error('Fetch from db')
+      this.eventData = {}
+      console.log('Should fetch from db')
+    }
     this.addDate = this.opts.addDate
 
     this.showDates = this.eventData.creating
@@ -125,6 +132,17 @@
         lastDate: this.eventData.from
       }
     ]
+
+    /*
+    // not called
+    this.on('route', (name, b, c) => {
+      // this.name = name
+      console.log('ROUTE777', name, b, c, this.opts)
+      // this.uniqueId(name)
+      console.log('FOR-STORE777::EVENTDATA#2:', this.eventData, this.dbUrl)
+    })
+    */
+
 
     const boop = (d, t) => new Date(`${d}T${t}`).toISOString().split('.')[0] + ' UTC'
 
