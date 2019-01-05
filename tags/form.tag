@@ -91,26 +91,97 @@
 
     // console.log('FOR-STORE:', this.storeGet('event'))
     this.eventData = this.storeGet('event')
+    console.log('FOR-STORE::EVENTDATA#1:', this.eventData, this.dbUrl)
     // console.log('EL-DB:', this.storeGet('db'))
 
-    this.on('route', (name, b, c) => {
-      // this.name = name
-      console.log('ROUTE555', name, b, c, this.opts)
+    if (!this.eventData) {
+      const [p, h] = window.location.hash.slice(1).split('/')
+      console.log('HASH:', h, p)
+      if (p !== 'vote') throw new Error('Unexpected path')
+
+      this.eventData = {
+        "_id": "d021b800c9576538",
+        "description": "",
+        "duration": 60,
+        "from": "2019-01-05",
+        "initialDates": [{
+            "date": "2019-01-05",
+            "preference": "100%",
+            "time": "12:00",
+            "utcTime": "2019-01-05T17:00:00 UTC"
+        }, {
+            "date": "2019-01-06",
+            "preference": "100%",
+            "time": "12:00",
+            "utcTime": "2019-01-06T17:00:00 UTC"
+        }],
+        "instigator": "dsa",
+        "location": "",
+        "offset": "UTC-0500",
+        "step": 900,
+        "title": "",
+        "until": "2019-01-23",
+        "url": ""
+      }
+
+    }
+
+    this.on('route', (name) => {
       this.uniqueId(name)
     })
+
+    /*
+    this.on('route', (name) => {
+      // this.name = name
+      console.log('ROUTE555', name)
+      this.uniqueId(name)
+      this.eventData = {
+        "_id": "d021b800c9576538",
+        "description": "",
+        "duration": 60,
+        "from": "2019-01-05",
+        "initialDates": [{
+            "date": "2019-01-05",
+            "preference": "100%",
+            "time": "12:00",
+            "utcTime": "2019-01-05T17:00:00 UTC"
+        }, {
+            "date": "2019-01-06",
+            "preference": "100%",
+            "time": "12:00",
+            "utcTime": "2019-01-06T17:00:00 UTC"
+        }],
+        "instigator": "dsa",
+        "location": "",
+        "offset": "UTC-0500",
+        "step": 900,
+        "title": "",
+        "until": "2019-01-23",
+        "url": ""
+      }
+
+      console.log('FOR-STORE::EVENTDATA#2:', this.eventData, this.dbUrl)
+      this.update()
+    })
+    */
 
     confirm(ev) {
       // const db = this.storeGet('db')
       console.log('CONFIRM')
-      const event = {
-        ...this.eventData,
-        initialDates: this.datesGiven
+
+      const ps = []
+      if (this.eventData.creating) {
+        const event = {
+          ...this.eventData,
+          initialDates: this.datesGiven
+        }
+        delete event.creating
+        ps.push(this.dbPost('event', event))
+        console.log('FULL-EVENT:', event)
       }
-      delete event.creating
-      console.log('FULL-EVENT:', event)
 
       const vote = {
-        // _id: this.uniqueId(),
+        _id: this.makeId(),
         name: this.name,
         email: this.email,
         initialDates: this.datesGiven,
@@ -118,15 +189,34 @@
       }
       console.log('FULL-VOTE:', vote)
 
+      /*
+      this.dbPost('vote', vote)
+        .then(({ ok }) => {
+          if (!ok) throw new Error('bad bad')
+          console.log('All good!', this.dbUrl)
+          // We're good!
+        })
+        .catch((e) => {
+          console.error(e)
+          // We're not good!
+        })
+      */
+
+      ps.push(this.dbPost('vote', vote))
+      /*
       Promise.all([
         this.dbPost('event', event),
-        this.dbPost('vote', vote, `${event._id}--${vote._id}`)
+        // this.dbPost('vote', vote, `${event._id}--${vote._id}`)
+        this.dbPost('vote', vote)
       ])
+      */
+      Promise.all(ps)
         .then((zz) => {
           if (!zz || !zz.length || (zz.filter(({ ok }) => ok).length !== zz.length))
             throw new Error('bad bad')
 
           // We're good!
+          console.log('All good!', this.dbUrl)
         })
         .catch((e) => {
           console.error(e)
