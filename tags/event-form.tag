@@ -115,7 +115,7 @@
 
             <div class="control">
               <button class="content button is-primary is-fullwidth">
-                2<sup>e</sup>&nbsp;étape →
+                Spécifier des dates/heures →
               </button>
             </div>
           </form>
@@ -172,6 +172,7 @@
       if (!vals.step) vals.step = 900
 
       this.storeSet('event', vals)
+      // this.storeSet('db', 'https://www.jsonstore.io/675197fb759f7a065fbc0ab3fde23af0c2022f3a1bf9ccf6963ccb43b90d3031')
       window.location.hash = `#vote/${vals._id}`
     }
     this.on('mount', () => this.refs.title.focus())
