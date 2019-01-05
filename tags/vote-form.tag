@@ -128,7 +128,6 @@
 
     const boop = (d, t) => new Date(`${d}T${t}`).toISOString().split('.')[0] + ' UTC'
 
-    // const parsePicks = () => this.eventPrefs ? this.eventPrefs
     const parsePicks = () => this.eventPrefs
       .filter(({ picked }) => picked)
       .map(({ local, pref }) => {
@@ -145,7 +144,6 @@
         }
         return o
       })
-      // : []
 
     const moreDates = () => {
       const dates = Array.isArray(this.refs.date) ? this.refs.date : [this.refs.date]

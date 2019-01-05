@@ -128,7 +128,6 @@
     this.mixin('localDate')
     this.mixin("routed")
     this.mixin("db")
-    // this.mixin("uniqueId")
     this.today = this.localDate()
 
     timeChange(ev) {
@@ -153,14 +152,6 @@
         }
       })
       .catch((e) => console.error('UNIQ ERR', e))
-
-    /*
-    this.initVal = {
-      creating: true,
-      offset: this.offset,
-      _id: this.uniqueId()
-    }
-    */
 
     submit(ev) {
       ev.preventDefault()

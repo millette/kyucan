@@ -8,7 +8,7 @@ const dates = eventVotes
   .map(({ moments }) =>
     moments
       .filter(({ local }) => local)
-      .map(({ local, preference }) => ({ local, preference })),
+      .map(({ local, preference }) => ({ local, preference }))
   )
   .reduce((a, b) => [...a, ...b], [])
 

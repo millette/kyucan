@@ -83,7 +83,6 @@
 
   <script>
     this.mixin("db")
-    // this.mixin("uniqueId")
     this.mixin("store")
     this.mixin("event")
     this.mixin("routed")

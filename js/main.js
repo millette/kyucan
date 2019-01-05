@@ -1,5 +1,6 @@
-// npm
+"use strict"
 
+// npm
 import riot from "riot"
 import route from "riot-route/lib/tag"
 
