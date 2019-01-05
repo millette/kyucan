@@ -4,8 +4,8 @@ import { db } from "../config.json"
 
 const cryptoObj = window.crypto || window.msCrypto
 
-const makeId = (len) =>
-  Array.from(cryptoObj.getRandomValues(new Uint8Array(len)))
+const makeId = () =>
+  Array.from(cryptoObj.getRandomValues(new Uint8Array(8)))
     .map((b) => b.toString(16).padStart(2, "0"))
     .join("")
 
@@ -15,9 +15,10 @@ const get = (u) =>
   )
 
 module.exports = {
+  makeId,
   uniqueId: function uniqueId(id) {
     const noId = !id
-    if (noId) id = makeId(8)
+    if (noId) id = makeId()
     const w = db.slice(0, -id.length) + id
     if (!noId) {
       this.dbUrl = w
