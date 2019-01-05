@@ -2,15 +2,60 @@
 
 import { db } from "../config.json"
 
+const cryptoObj = window.crypto || window.msCrypto
+
+const makeId = (len) =>
+  Array.from(cryptoObj.getRandomValues(new Uint8Array(len)))
+    .map((b) => b.toString(16).padStart(2, "0"))
+    .join("")
+
+const get = (u) =>
+  fetch(u, { headers: { accept: "application/json" } }).then((res) =>
+    res.json(),
+  )
+
 module.exports = {
-  dbPost: (type, data, id) =>
-    fetch([db, type, id || data._id].join("/"), {
+  uniqueId: function uniqueId(id2) {
+    if (id2) {
+      this.dbUrl = db.slice(0, -id2.length) + id2
+      console.log("uniqueId2:", id2)
+      return id2
+    }
+    const id = makeId(8)
+    console.log("uniqueId:", id)
+    const w = db.slice(0, -id.length) + id
+    return get(w).then((so) => {
+      console.log("uniqueId-so:", so)
+      if (so.result !== null) return uniqueId()
+      this.dbUrl = w
+      return id
+    })
+  },
+
+  /*
+  uniqueId: function uniqueId (len = 8) {
+    const id = makeId(len)
+    console.log('uniqueId:', len, id)
+    const w = db.slice(0, -id.length) + id
+    return get(w)
+      .then((so) => {
+        console.log('uniqueId-so:', so)
+        if (so.result !== null) return uniqueId(len)
+        this.dbUrl = w
+        return id
+      })
+  },
+  */
+  dbPost: function(type, data, id) {
+    if (!this.dbUrl) throw new Error("Call uniqueId() first")
+    return fetch([this.dbUrl, type, id || data._id].join("/"), {
       headers: { "Content-type": "application/json" },
       method: "POST",
       body: JSON.stringify(data),
-    }).then((res) => res.json()),
-  dbGet: (type, data, id) =>
-    fetch([db, type, id || data._id].join("/"), {
-      headers: { accept: "application/json" },
-    }).then((res) => res.json()),
+    }).then((res) => res.json())
+  },
+  dbGet: function(type, data, id) {
+    if (!this.dbUrl) throw new Error("Call uniqueId() first")
+    return get([this.dbUrl, type, id || data._id].join("/"))
+  },
 }
