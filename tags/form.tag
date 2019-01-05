@@ -83,7 +83,7 @@
 
   <script>
     this.mixin("db")
-    this.mixin("uniqueId")
+    // this.mixin("uniqueId")
     this.mixin("store")
     this.mixin("event")
     this.mixin("routed")
@@ -96,7 +96,8 @@
 
     this.on('route', (name, b, c) => {
       // this.name = name
-      console.log('ROUTE', name, b, c, this.opts)
+      console.log('ROUTE555', name, b, c, this.opts)
+      this.uniqueId(name)
     })
 
     confirm(ev) {
@@ -110,7 +111,7 @@
       console.log('FULL-EVENT:', event)
 
       const vote = {
-        _id: this.uniqueId(),
+        // _id: this.uniqueId(),
         name: this.name,
         email: this.email,
         initialDates: this.datesGiven,
