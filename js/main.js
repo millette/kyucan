@@ -12,8 +12,10 @@ import routed from "./routed.js"
 import localDate from "./local-date.js"
 import uniqueId from "./unique-id.js"
 import store from "./store.js"
+import db from "./db.js"
 
 riot.mixin("store", store)
+riot.mixin("db", db)
 riot.mixin("oy", oy)
 riot.mixin("event", event)
 riot.mixin("routed", routed)
