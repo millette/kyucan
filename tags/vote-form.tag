@@ -6,9 +6,9 @@
         <input
           ref="name"
           required
-          class="{(`input${this.eventData.instigator ? '' : ' is-danger'}`)}"
+          class="input is-danger"
           type="text"
-          value="{eventData.instigator}"
+          value="{(this.eventData.creating ? eventData.instigator : '')}"
           placeholder="Nom complet, prénom ou alias"
           oninvalid="{invalid}"
           onchange="{ok}"
@@ -252,6 +252,12 @@
       if (this.refs.email.value) this.refs.email.classList.add('is-success')
         e.target.classList.add('is-danger')
     }
+
+    this.on('update', () => {
+      if (!this.eventData.instigator || !this.eventData.creating) {
+        this.refs.name.focus()
+      }
+    })
 
     if (!this.eventData.instigator) this.on('mount', () => this.refs.name.focus())
   </script>
