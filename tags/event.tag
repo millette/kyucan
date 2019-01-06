@@ -1,28 +1,38 @@
 <event-tag>
-  <h3 class="subtitle is-4">{eventData.title}</h3>
-  <div class="content">
-    <p>{eventData.description}</p>
-    <dl>
-      <dt if="{eventData.instigator}">Instigateur</dt>
-      <dd if="{eventData.instigator}">{eventData.instigator}</dd>
+  <article if="{loading}" class="message is-warning">
+    <div class="message-header"><p>Chargement</p></div>
+    <div class="message-body">
+      <p>Veuillez patienter svp...</p>
+      <span class="button is-warning is-loading is-fullwidth"></span>
+    </div>
+  </article>
 
-      <dt if="{eventData.duration}">Durée</dt>
-      <dd if="{eventData.duration}">{eventData.duration / 60}h</dd>
+  <virtual if="{!loading}">
+    <h3 class="subtitle is-4">{eventData.title}</h3>
+    <div class="content">
+      <p>{eventData.description}</p>
+      <dl>
+        <dt if="{eventData.instigator}">Instigateur</dt>
+        <dd if="{eventData.instigator}">{eventData.instigator}</dd>
 
-      <dt if="{eventData.location}">Lieu</dt>
-      <dd if="{eventData.location}">{eventData.location}</dd>
+        <dt if="{eventData.duration}">Durée</dt>
+        <dd if="{eventData.duration}">{eventData.duration / 60}h</dd>
 
-      <dt if="{eventData.url}">Site web</dt>
-      <dd if="{eventData.url}">
-        <a href="{eventData.url}">{eventData.url}</a>
-      </dd>
+        <dt if="{eventData.location}">Lieu</dt>
+        <dd if="{eventData.location}">{eventData.location}</dd>
 
-      <dt if="{(eventData.from && eventData.until)}">Entre</dt>
-      <dd if="{eventData.from}">{eventData.from}</dd>
-      <dd if="{eventData.until}">{eventData.until}</dd>
-      <dd if="{eventData.offset}">{eventData.offset}</dd>
-    </dl>
-  </div>
+        <dt if="{eventData.url}">Site web</dt>
+        <dd if="{eventData.url}">
+          <a href="{eventData.url}">{eventData.url}</a>
+        </dd>
+
+        <dt if="{(eventData.from && eventData.until)}">Entre</dt>
+        <dd if="{eventData.from}">{eventData.from}</dd>
+        <dd if="{eventData.until}">{eventData.until}</dd>
+        <dd if="{eventData.offset}">{eventData.offset}</dd>
+      </dl>
+    </div>
+  </virtual>
 
   <style>
     dl {
@@ -31,6 +41,11 @@
   </style>
 
   <script>
-    this.eventData = this.opts.event || {}
+    this.loading = !this.opts.event
+    this.eventData = this.opts.event
+
+    this.on("update", (a) => {
+      this.loading = !this.eventData
+    })
   </script>
 </event-tag>
