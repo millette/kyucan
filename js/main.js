@@ -6,7 +6,7 @@ import route from "riot-route/lib/tag"
 
 // self
 import "../tags/index.js"
-import commithash from "../more/git-master-head.txt"
+import commithash from "../more/git-head.txt"
 import oy from "./oy.js"
 // import event from "./event.js"
 import routed from "./routed.js"
