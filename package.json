@@ -32,6 +32,7 @@
     "riot-route": "^3.1.4"
   },
   "devDependencies": {
+    "gh-pages": "^2.0.1",
     "husky": "^1.3.1",
     "lint-staged": "^8.1.0",
     "node-sass": "^4.11.0",
@@ -42,8 +43,9 @@
     "prettier": "^1.15.3"
   },
   "scripts": {
-    "build": "cp .git/refs/heads/master more/git-master-head.txt && parcel build --no-source-maps --detailed-report --experimental-scope-hoisting index.html",
+    "build": "cp .git/`cat .git/HEAD|cut -b 6-` more/git-master-head.txt && parcel build --no-source-maps --detailed-report --experimental-scope-hoisting --public-url ./ index.html",
     "clean": "rm -fr .cache dist",
+    "deploy": "npm run clean && npm run build && gh-pages -d dist",
     "start": "CHOKIDAR_USEPOLLING=yes parcel index.html # workaround https://github.com/parcel-bundler/parcel/issues/1743#issuecomment-441278085"
   },
   "purgecss": {
