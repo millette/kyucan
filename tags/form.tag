@@ -84,7 +84,7 @@
   <script>
     this.mixin("db")
     this.mixin("store")
-    this.mixin("event")
+    // this.mixin("event")
     this.mixin("routed")
     this.show = false
     this.datesGiven = []
@@ -97,6 +97,7 @@
       this.uniqueId(h)
       this.dbGet('event', h)
         .then(({ result }) => {
+          if (!result) throw new Error('Event not found')
           this.eventData = result
           this.tags['vote-form'].eventData = result
           this.tags['event-tag'].eventData = result
