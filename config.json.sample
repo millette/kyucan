@@ -5,5 +5,12 @@
     "Replace [ENDPOINT] below with a proper token",
     "Then copy to config.json"
   ],
-  "db": "https://www.jsonstore.io/[ENDPOINT]"
+  "db": "https://www.jsonstore.io/[ENDPOINT]",
+  "#COMMENT": [
+    "Default length is 8 characters",
+    "Maximum is 64, minimum is 1",
+    "Longer means less chance of a collision",
+    "Smaller means shorter IDs (and URLs)"
+  ],
+  "idLength": 8
 }

@@ -1,11 +1,12 @@
 "use strict"
 
-import { db } from "../config.json"
+import { db, idLength } from "../config.json"
 
 const cryptoObj = window.crypto || window.msCrypto
+const len = Math.max(Math.min(idLength || 8, 64), 1)
 
 const makeId = () =>
-  Array.from(cryptoObj.getRandomValues(new Uint8Array(8)))
+  Array.from(cryptoObj.getRandomValues(new Uint8Array(len)))
     .map((b) => b.toString(16).padStart(2, "0"))
     .join("")
 
