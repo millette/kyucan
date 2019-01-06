@@ -1,5 +1,6 @@
 <vote-form>
-  <form class="box" onsubmit="{submit}">
+  <p if="{loadingError}">{loadingError}</p>
+  <form if="{!loadingError}" class="box" onsubmit="{submit}">
     <div class="field">
       <label class="label">Nom</label>
       <div class="control">
@@ -253,7 +254,12 @@
         e.target.classList.add('is-danger')
     }
 
-    this.on('update', () => {
+    this.on('update', (a) => {
+      if (a && a.loadingError) {
+        this.loadingError = a.loadingError.toString()
+        return
+      }
+
       if (!this.eventData.instigator || !this.eventData.creating) {
         this.refs.name.focus()
       }
