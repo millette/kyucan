@@ -103,7 +103,10 @@
           this.tags['event-tag'].eventData = result
           this.update()
       })
-      .catch(console.error)
+      .catch((loadingError) => {
+        this.tags['vote-form'].update({ loadingError })
+        this.tags['event-tag'].update({ loadingError })
+      })
     }
 
     this.on('route', (name) => {
