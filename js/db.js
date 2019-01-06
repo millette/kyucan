@@ -39,8 +39,8 @@ module.exports = {
       body: JSON.stringify(data),
     }).then((res) => res.json())
   },
-  dbGet: function(type, data, id) {
+  dbGet: function(type, id) {
     if (!this.dbUrl) throw new Error("Call uniqueId() first")
-    return get([this.dbUrl, type, id || data._id].join("/"))
+    return get([this.dbUrl, type, id].join("/"))
   },
 }
