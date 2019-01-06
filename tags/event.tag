@@ -31,7 +31,6 @@
   </style>
 
   <script>
-    this.on("*", (c) => console.log("ON-EVENT", c, this.eventData))
     this.eventData = this.opts.event || {}
   </script>
 </event-tag>

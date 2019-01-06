@@ -111,25 +111,10 @@
   </style>
 
   <script>
-    console.log('Render vote-form')
-
-    this.on('*', (c) => console.log('ON-VOTEFORM', c, this.eventData))
-
-
-
-    shouldUpdate(data, nextOpts) {
-      console.log('SHOULD#2?', data, nextOpts)
-      return true
-    }
-
     this.mixin('localDate')
 
-    if (this.opts.eventData) {
-      this.eventData = this.opts.eventData
-    } else {
-      // throw new Error('Fetch from db')
-      this.eventData = {}
-      console.log('Should fetch from db')
+    if (!this.eventData) {
+      this.eventData = this.opts.eventData || {}
     }
 
     this.addDate = this.opts.addDate
@@ -144,17 +129,6 @@
         lastDate: this.eventData.from
       }
     ]
-
-    /*
-    // not called
-    this.on('route', (name, b, c) => {
-      // this.name = name
-      console.log('ROUTE777', name, b, c, this.opts)
-      // this.uniqueId(name)
-      console.log('FOR-STORE777::EVENTDATA#2:', this.eventData, this.dbUrl)
-    })
-    */
-
 
     const boop = (d, t) => new Date(`${d}T${t}`).toISOString().split('.')[0] + ' UTC'
 
