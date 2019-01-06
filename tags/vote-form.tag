@@ -112,7 +112,18 @@
 
   <script>
     console.log('Render vote-form')
+
+    this.on('*', (c) => console.log('ON-VOTEFORM', c, this.eventData))
+
+
+
+    shouldUpdate(data, nextOpts) {
+      console.log('SHOULD#2?', data, nextOpts)
+      return true
+    }
+
     this.mixin('localDate')
+
     if (this.opts.eventData) {
       this.eventData = this.opts.eventData
     } else {
@@ -120,6 +131,7 @@
       this.eventData = {}
       console.log('Should fetch from db')
     }
+
     this.addDate = this.opts.addDate
 
     this.showDates = this.eventData.creating

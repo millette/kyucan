@@ -89,40 +89,86 @@
     this.show = false
     this.datesGiven = []
 
+    this.on('*', (c) => console.log('ON-FORM', c, this.eventData))
+
     // console.log('FOR-STORE:', this.storeGet('event'))
     this.eventData = this.storeGet('event')
     console.log('FOR-STORE::EVENTDATA#1:', this.eventData, this.dbUrl)
     // console.log('EL-DB:', this.storeGet('db'))
+
+    shouldUpdate(data, nextOpts) {
+      console.log('SHOULD#1?', data, nextOpts)
+      return true
+    }
 
     if (!this.eventData) {
       const [p, h] = window.location.hash.slice(1).split('/')
       console.log('HASH:', h, p)
       if (p !== 'vote') throw new Error('Unexpected path')
 
-      this.eventData = {
-        "_id": "d021b800c9576538",
-        "description": "",
-        "duration": 60,
-        "from": "2019-01-05",
-        "initialDates": [{
-            "date": "2019-01-05",
-            "preference": "100%",
-            "time": "12:00",
-            "utcTime": "2019-01-05T17:00:00 UTC"
-        }, {
-            "date": "2019-01-06",
-            "preference": "100%",
-            "time": "12:00",
-            "utcTime": "2019-01-06T17:00:00 UTC"
-        }],
-        "instigator": "dsa",
-        "location": "",
-        "offset": "UTC-0500",
-        "step": 900,
-        "title": "",
-        "until": "2019-01-23",
-        "url": ""
-      }
+      setTimeout(() => {
+        console.log('DO IT!')
+        // const eventData2 = {
+        this.eventData = {
+          "_id": "d021b800c9576538",
+          "description": "",
+          "duration": 60,
+          "from": "2019-01-05",
+          "initialDates": [{
+              "date": "2019-01-05",
+              "preference": "100%",
+              "time": "12:00",
+              "utcTime": "2019-01-05T17:00:00 UTC"
+          }, {
+              "date": "2019-01-06",
+              "preference": "100%",
+              "time": "12:00",
+              "utcTime": "2019-01-06T17:00:00 UTC"
+          }],
+          "instigator": "dsa",
+          "location": "",
+          "offset": "UTC-0500",
+          "step": 900,
+          "title": "",
+          "until": "2019-01-23",
+          "url": ""
+        }
+        // console.log('TAGS:', this.tags)
+        this.tags['vote-form'].update({ eventData: this.eventData })
+        this.tags['event-tag'].update({ eventData: this.eventData })
+        // this.update({ eventData: eventData2 })
+        this.update()
+        // riot.update({ eventData: this.eventData })
+
+        /*
+        {
+          eventData: {
+            "_id": "d021b800c9576538",
+            "description": "",
+            "duration": 60,
+            "from": "2019-01-05",
+            "initialDates": [{
+                "date": "2019-01-05",
+                "preference": "100%",
+                "time": "12:00",
+                "utcTime": "2019-01-05T17:00:00 UTC"
+            }, {
+                "date": "2019-01-06",
+                "preference": "100%",
+                "time": "12:00",
+                "utcTime": "2019-01-06T17:00:00 UTC"
+            }],
+            "instigator": "dsa",
+            "location": "",
+            "offset": "UTC-0500",
+            "step": 900,
+            "title": "",
+            "until": "2019-01-23",
+            "url": ""
+          }
+        }
+        */
+      }, 100)
 
     }
 
