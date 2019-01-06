@@ -54,5 +54,10 @@
     "whitelist": [
       "is-active"
     ]
+  },
+  "sass": {
+    "includePaths": [
+      "./node_modules/bulma"
+    ]
   }
 }
