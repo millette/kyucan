@@ -1,5 +1,13 @@
 <event-tag>
-  <article if="{loading}" class="message is-warning">
+  <article if="{loadingError}" class="message is-danger">
+    <div class="message-header"><p>Erreur de chargement</p></div>
+    <div class="message-body">
+      <p>Vérifiez l'URL, cet événement ne semble pas exister.</p>
+      <p>{loadingError}</p>
+    </div>
+  </article>
+
+  <article if="{loading && !loadingError}" class="message is-warning">
     <div class="message-header"><p>Chargement</p></div>
     <div class="message-body">
       <p>Veuillez patienter svp...</p>
@@ -7,7 +15,7 @@
     </div>
   </article>
 
-  <virtual if="{!loading}">
+  <virtual if="{!loading && !loadingError}">
     <h3 class="subtitle is-4">{eventData.title}</h3>
     <div class="content">
       <p>{eventData.description}</p>
@@ -46,6 +54,9 @@
 
     this.on("update", (a) => {
       this.loading = !this.eventData
+      if (a && a.loadingError) {
+        this.loadingError = a.loadingError.toString()
+      }
     })
   </script>
 </event-tag>
