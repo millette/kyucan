@@ -94,37 +94,15 @@
     if (!this.eventData) {
       const [p, h] = window.location.hash.slice(1).split('/')
       if ((p !== 'vote') || !h) throw new Error('Unexpected path')
-
-      setTimeout(() => {
-        this.eventData = {
-          "_id": "d021b800c9576538",
-          "description": "",
-          "duration": 60,
-          "from": "2019-01-05",
-          "initialDates": [{
-              "date": "2019-01-05",
-              "preference": "100%",
-              "time": "12:00",
-              "utcTime": "2019-01-05T17:00:00 UTC"
-          }, {
-              "date": "2019-01-06",
-              "preference": "100%",
-              "time": "12:00",
-              "utcTime": "2019-01-06T17:00:00 UTC"
-          }],
-          "instigator": "dsa",
-          "location": "",
-          "offset": "UTC-0500",
-          "step": 900,
-          "title": "",
-          "until": "2019-01-23",
-          "url": ""
-        }
-        this.tags['vote-form'].update({ eventData: this.eventData })
-        this.tags['event-tag'].update({ eventData: this.eventData })
-        this.update()
-      }, 100)
-
+      this.uniqueId(h)
+      this.dbGet('event', h)
+        .then(({ result }) => {
+          this.eventData = result
+          this.tags['vote-form'].eventData = result
+          this.tags['event-tag'].eventData = result
+          this.update()
+      })
+      .catch(console.error)
     }
 
     this.on('route', (name) => {
