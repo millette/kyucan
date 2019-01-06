@@ -61,5 +61,18 @@
     "includePaths": [
       "./node_modules/bulma"
     ]
+  },
+  "prettier": {
+    "semi": false,
+    "trailingComma": "es5",
+    "arrowParens": "always",
+    "overrides": [
+      {
+        "files": "tags/*.tag",
+        "options": {
+          "parser": "html"
+        }
+      }
+    ]
   }
 }
