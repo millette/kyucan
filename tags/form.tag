@@ -16,7 +16,18 @@
           />
         </div>
         <div if="{show}" class="column">
-          <article class="message is-warning">
+          <article if="{postError}" class="message is-danger">
+            <div class="message-header">
+              <h3 id="choices">Erreur</h3>
+              <button
+                onclick="{deleteMessage}"
+                class="delete"
+                aria-label="delete"
+              ></button>
+            </div>
+            <div class="message-body content"><p>{postError}</p></div>
+          </article>
+          <article if="{!postError}" class="message is-warning">
             <div class="message-header">
               <h3 id="choices">Mes choix</h3>
               <button
@@ -83,7 +94,6 @@
   <script>
     this.mixin("db")
     this.mixin("store")
-    // this.mixin("event")
     this.mixin("routed")
     this.show = false
     this.datesGiven = []
@@ -132,18 +142,17 @@
       }
 
       ps.push(this.dbPost('vote', vote))
+
       Promise.all(ps)
         .then((zz) => {
           if (!zz || !zz.length || (zz.filter(({ ok }) => ok).length !== zz.length))
-            throw new Error('bad bad')
+            throw new Error('Problème de `post`.')
 
-          // We're good!
-          console.log('All good!', this.dbUrl)
+          window.location.hash = this.eventData.creating
+            ? `#evenement/${vote.eventId}`
+            : `#vote/${vote.eventId}/${vote._id}`
         })
-        .catch((e) => {
-          console.error(e)
-          // We're not good!
-        })
+        .catch((e) => this.update({ postError: e.toString() }))
     }
 
     setShow(show, datesGiven, name, email) {
@@ -155,6 +164,9 @@
       if (show) document.getElementById('choices').scrollIntoView({ behavior: 'smooth' })
     }
 
-    deleteMessage() { this.show = false }
+    deleteMessage() {
+      this.show = false
+      this.postError = false
+    }
   </script>
 </form-tag>
