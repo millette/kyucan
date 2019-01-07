@@ -1,6 +1,6 @@
 <event-edit>
   <section class="section">
-    <div class="container"><p>Event created {eventid}</p></div>
+    <div class="container"><p>Événement créé: {eventid}</p></div>
   </section>
 
   <script>
