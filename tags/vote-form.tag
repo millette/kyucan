@@ -133,6 +133,7 @@
     this.showDates = this.eventData.creating
 
     this.datesGiven = []
+
     this.dates = [
       {
         n: 1,
@@ -275,8 +276,15 @@
         this.refs.name.focus()
       }
 
-      if (this.eventData.initialDates && !this.eventPrefs)
+      if (this.eventData.initialDates && !this.eventPrefs) {
         this.eventPrefs = mv2(this.eventData.initialDates)
+        this.dates = [
+          {
+            n: 1,
+            lastDate: this.eventData.from
+          }
+        ]
+      }
     })
 
     if (!this.eventData.instigator) this.on('mount', () => this.refs.name.focus())
