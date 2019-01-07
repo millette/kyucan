@@ -112,18 +112,27 @@
   </style>
 
   <script>
+    const mv2 = (dd) => dd
+      .map(({ date, preference, time, utcTime }, i) => ({
+        picked: false,
+        n: i + 1,
+        local: `${date}T${time}`,
+        pref:  parseInt(preference, 10) / 100,
+        utcTime
+      }))
+      .sort((a, b) => {
+        if (a.pref > b.pref) return 1
+        if (a.pref < b.pref) return -1
+        return 0
+      })
+      .reverse()
+
     this.mixin('localDate')
-
-    if (!this.eventData) {
-      this.eventData = this.opts.eventData || {}
-    }
-
+    if (!this.eventData) this.eventData = this.opts.eventData || {}
     this.addDate = this.opts.addDate
-
     this.showDates = this.eventData.creating
-    if (!this.showDates) this.eventPrefs = this.opts.eventPrefs
-    this.datesGiven = []
 
+    this.datesGiven = []
     this.dates = [
       {
         n: 1,
@@ -245,7 +254,9 @@
     }
 
     pickPref(ev) {
+      console.log('PICK-PREF#0', ev.item, ev.target, ev.target.checked)
       ev.item.picked = ev.target.checked
+      console.log('PICK-PREF#1', ev.item, ev.target, ev.target.checked)
     }
 
     invalid(e) {
@@ -263,6 +274,9 @@
       if (!this.eventData.instigator || !this.eventData.creating) {
         this.refs.name.focus()
       }
+
+      if (this.eventData.initialDates && !this.eventPrefs)
+        this.eventPrefs = mv2(this.eventData.initialDates)
     })
 
     if (!this.eventData.instigator) this.on('mount', () => this.refs.name.focus())

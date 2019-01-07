@@ -10,7 +10,6 @@
         <div class="column is-narrow">
           <vote-form
             submit="{submit}"
-            event-prefs="{eventPrefs}"
             event-data="{eventData}"
             add-date="{addDate}"
             set-show="{setShow}"
