@@ -18,6 +18,11 @@
             </code>
             avec vos invités pour leur permettre de voter.
           </p>
+          <p>
+            Conservez le lien précieusement, c'est la seule clé pour accéder aux
+            données et l'administrateur de ce site n'a pas d'accès non plus sans
+            cet URL.
+          </p>
         </div>
       </div>
     </div>
