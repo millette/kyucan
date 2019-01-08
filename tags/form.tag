@@ -4,7 +4,7 @@
       <div class="columns">
         <div class="column">
           <event-tag event="{eventData}" />
-          <instructions-tag />
+          <instructions-tag creating="{creating}" />
         </div>
 
         <div class="column is-narrow">
@@ -99,6 +99,8 @@
     this.datesGiven = []
 
     this.eventData = this.storeGet('event')
+
+    this.creating = this.eventData && this.eventData.creating
 
     if (!this.eventData) {
       const [p, h] = window.location.hash.slice(1).split('/')
