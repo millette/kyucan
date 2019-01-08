@@ -24,7 +24,7 @@
       <div class="navbar-menu">
         <div class="navbar-start">
           <a href="#evenement" class="navbar-item">Événement</a>
-          <a href="#vote" class="navbar-item">Vote</a>
+          <a class="navbar-item">Vote</a>
         </div>
       </div>
     </div>
