@@ -27,6 +27,7 @@
                   class="input"
                   ref="instigator"
                   type="text"
+                  required
                   placeholder="Personne ou organisme responsable"
                 />
               </div>
