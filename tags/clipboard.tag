@@ -34,8 +34,6 @@
     this.inputClass = 'is-info'
     this.val = this.opts.val
 
-    this.on('bebaboop', () => this.refs.cb && this.refs.cb.click())
-
     copyit(ev) {
       ev.preventDefault()
       try {
