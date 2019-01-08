@@ -4,7 +4,7 @@
       <div class="columns">
         <div class="column">
           <h3 class="title is-3">Événement</h3>
-          <h4 class="subtitle is-5">Instructions</h4>
+          <instructions-create />
         </div>
         <div class="column is-narrow">
           <form class="box" onsubmit="{submit}">
