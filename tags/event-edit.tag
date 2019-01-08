@@ -11,7 +11,11 @@
           <h2 class="title is-3">Instructions</h2>
           <p>
             Partagez le lien
-            <code><out-link href="{voteUrl}">{parent.voteUrl}</out-link></code>
+            <code
+              ><out-link if="{voteUrl}" href="{voteUrl}"
+                >{parent.voteUrl}</out-link
+              ></code
+            >
             avec vos invités pour leur permettre de voter.
           </p>
         </div>
