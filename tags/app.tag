@@ -10,7 +10,7 @@
     <route path="vote/*/*"> <voted-tag navid="3" /> </route>
     <route path="evenement/*"> <event-edit navid="2" /> </route>
   </router>
-  <footer-tag commithash="{commithash}"><p>Ligne numéro deux</p></footer-tag>
+  <footer-tag commithash="{commithash}" />
 
   <script>
     this.commithash = this.opts.commithash

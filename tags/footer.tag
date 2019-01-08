@@ -1,13 +1,16 @@
 <footer-tag>
   <section class="footer">
-    <div class="container has-text-centered">
-      <p class="has-text-success">
-        Je suis le footer, hear me roar!
+    <div class="container has-text-centered has-text-success">
+      <p>
+        &copy; 2018-2019
+        <out-link href="http://robin.millette.info/"> Robin Millette </out-link>
+      </p>
+      <p>
         <out-link href="https://github.com/millette/kyucan/tree/{commithash}">
-          sources - hash #{parent.commithash}
+          Kyucan - hash #{parent.commithash}
         </out-link>
       </p>
-      <yield />
+      <p>License AGPLv3</p>
     </div>
   </section>
 
