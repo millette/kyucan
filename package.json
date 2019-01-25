@@ -29,6 +29,7 @@
   },
   "dependencies": {
     "bulma": "^0.7.2",
+    "riot": "^3.13.2",
     "riot-route": "^3.1.4"
   },
   "devDependencies": {
@@ -40,7 +41,7 @@
     "parcel-plugin-purgecss": "^2.1.0",
     "parcel-plugin-tag": "^1.1.0",
     "parcel-plugin-txt": "^1.0.3",
-    "prettier": "^1.15.3"
+    "prettier": "^1.16.1"
   },
   "scripts": {
     "build": "cp .git/`cat .git/HEAD|cut -b 6-` more/git-head.txt && parcel build --no-source-maps --detailed-report --experimental-scope-hoisting --public-url ./ index.html",
