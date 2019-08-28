@@ -37,7 +37,7 @@
     "husky": "^1.3.1",
     "lint-staged": "^8.1.0",
     "node-sass": "^4.11.0",
-    "parcel-bundler": "^1.11.0",
+    "parcel-bundler": "^1.12.3",
     "parcel-plugin-purgecss": "^2.1.0",
     "parcel-plugin-tag": "^1.1.0",
     "parcel-plugin-txt": "^1.0.3",
