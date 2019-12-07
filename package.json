@@ -36,7 +36,7 @@
     "gh-pages": "^2.1.1",
     "husky": "^2.7.0",
     "lint-staged": "^9.5.0",
-    "node-sass": "^4.12.0",
+    "node-sass": "^4.13.0",
     "parcel-bundler": "^1.12.4",
     "parcel-plugin-purgecss": "^2.1.0",
     "parcel-plugin-tag": "^1.1.0",
